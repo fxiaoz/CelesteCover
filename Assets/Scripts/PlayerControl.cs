@@ -8,6 +8,7 @@ public class PlayerControl : MonoBehaviour
 {
     //Stats
     public float speed = 1f;
+    float horizontalMove;
 
     public float castDist = 0.2f;
     public float gravityScale = 5f;
@@ -18,6 +19,8 @@ public class PlayerControl : MonoBehaviour
     public bool dash = false;
     public bool jump = false;
     public bool climb = true;
+
+    public bool grounded = true;
 
     //Components
     Rigidbody2D myBody;
@@ -35,6 +38,8 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        horizontalMove = Input.GetAxis("Horizontal");
+
         if (Input.GetKeyDown(KeyCode.A))
         {
 
@@ -51,7 +56,11 @@ public class PlayerControl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.J))
         {
-            jump = true;
+            //if (grounded)
+            //{
+                jump = true;
+                //jump sound play
+            //}
         }
 
         if (Input.GetKeyDown(KeyCode.K))
@@ -71,19 +80,88 @@ public class PlayerControl : MonoBehaviour
                 climb = true;
             }
         }
+
+        if(horizontalMove > 0.2f)
+        {
+
+        }
+        else if(horizontalMove < -0.2f)
+        {
+
+        }
+        else
+        {
+
+        }
     }
 
     void FixedUpdate()
     {
+        float moveSpeed = horizontalMove * speed;
+        myBody.velocity = new Vector3(moveSpeed, myBody.velocity.y, 0);
+
         if (jump)
         {
+            myBody.AddForce(Vector2.up * jumpLimit, ForceMode2D.Impulse);
+            jump = false;
 
+            Debug.Log("jump");
         }
 
         if (dash)
         {
 
         }
+
+        if (myBody.velocity.y > 0)
+        {
+            myBody.gravityScale = gravityScale;
+        }
+        else if (myBody.velocity.y < 0)
+        {
+            myBody.gravityScale = gravityFall;
+        }
+
+        //Raycasting for grounding.
+
+        //RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.down, castDist);
+
+        //Debug.DrawRay(transform.position, Vector2.down * castDist, Color.red);
+
+        //for (int i = 0; i < hits.Length; i++)
+        //{
+        //    RaycastHit2D hit = hits[i];
+
+        //    if (hit.collider != null && hit.transform.name == "obj_ground")
+        //    {
+        //        grounded = true;
+        //    }
+        //    else
+        //    {
+        //        grounded = false;
+        //    }
+        //}
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, castDist);
+
+        Debug.DrawRay(transform.position, Vector2.down * castDist, Color.red);
+
+        if (hit.transform != null)
+        {
+            Debug.Log(hit.transform.name);
+        }
+
+        if (hit.collider != null && hit.transform.name == "obj_ground")
+        {
+            grounded = true;
+            Debug.Log("Grounded");
+        }
+        else
+        {
+            grounded = false;
+        }
+
+        myBody.velocity = new Vector3(moveSpeed, myBody.velocity.y, 0);
     }
 
     private void OnCollisionEnter2D(Collision2D Collision)
