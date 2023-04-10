@@ -56,11 +56,11 @@ public class PlayerControl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.J))
         {
-            //if (grounded)
-            //{
+            if (grounded)
+            {
                 jump = true;
                 //jump sound play
-            //}
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.K))
@@ -124,25 +124,9 @@ public class PlayerControl : MonoBehaviour
 
         //Raycasting for grounding.
 
-        //RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.down, castDist);
+        int layermask = LayerMask.GetMask("Ground");
 
-        //Debug.DrawRay(transform.position, Vector2.down * castDist, Color.red);
-
-        //for (int i = 0; i < hits.Length; i++)
-        //{
-        //    RaycastHit2D hit = hits[i];
-
-        //    if (hit.collider != null && hit.transform.name == "obj_ground")
-        //    {
-        //        grounded = true;
-        //    }
-        //    else
-        //    {
-        //        grounded = false;
-        //    }
-        //}
-
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, castDist);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, castDist, layermask);
 
         Debug.DrawRay(transform.position, Vector2.down * castDist, Color.red);
 
