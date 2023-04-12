@@ -7,31 +7,26 @@ using UnityEngine.Serialization;
 
 public class PlayerControl : MonoBehaviour
 {
+    public LayerMask ground;
+    
     //Speed
-    [SerializeField] public float speed = 1f;
+    [SerializeField] public float speed;
+    [SerializeField] public float dashSpeed;
+    [SerializeField]public float jumpSpeed;
+    
     private float _horizontalMove;
     private float _verticalMove;
-
-    public float jumpReady = 1;
-
-    //Gravity
-    [SerializeField] public float castDist = 0.2f;
-    public float gravityScale = 5f;
-    public float gravityFall = 40f;
-    public float jumpSpeed = 1f;
-
+    private readonly float _fallMultiplier=2.5f;
+    private readonly float _lowJumpMultiplier = 2f;
+    
     //StateMachine
-    public bool ifDash = false;
-    public bool ifJump = false;
-    public bool ifClimb = false;
-
-    public bool grounded = true;
-    public bool wallDetected = false;
+    public bool ifDash, ifClimb, ifGrounded;
 
     //Components
     private Rigidbody2D _myBody;
     private Animator _myAnim;
     private SpriteRenderer _myRend;
+    private BoxCollider2D _myBox;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +34,10 @@ public class PlayerControl : MonoBehaviour
         _myBody = GetComponent<Rigidbody2D>();
         _myAnim = GetComponent<Animator>();
         _myRend = GetComponent<SpriteRenderer>();
+        _myBox = GetComponent<BoxCollider2D>();
+        ifGrounded = true;
+        ifClimb = false;
+        ifDash = false;
     }
 
     // Update is called once per frame
@@ -47,17 +46,8 @@ public class PlayerControl : MonoBehaviour
         _horizontalMove = Input.GetAxis("Horizontal");
         _verticalMove = Input.GetAxis("Vertical");
         
-        //jump check
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            if (grounded)
-            {
-                ifJump = true;
-            }
-        }
-
         //dash check
-        if (Input.GetKeyDown(KeyCode.K)&&!grounded)
+        if (Input.GetKeyDown(KeyCode.K)&&!ifGrounded)
         {
             ifDash = true;
         }
@@ -75,71 +65,12 @@ public class PlayerControl : MonoBehaviour
 
     void FixedUpdate()
     {
+        ifGrounded = _myBox.IsTouchingLayers(ground);;
         Move();
         Jump();
         Climb();
         Dash();
-
-        //Gravity
-
-        if (ifClimb)
-        {
-            _myBody.gravityScale = 0;
-        }
-        else if (_myBody.velocity.y > 0)
-        {
-            _myBody.gravityScale = gravityScale;
-        }
-        else if (_myBody.velocity.y < 0)
-        {
-            _myBody.gravityScale = gravityFall;
-        }
-
-        //Raycasting for grounding.
-
-        int layermaskG = LayerMask.GetMask("Ground");
-
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, castDist, layermaskG);
-
-        Debug.DrawRay(transform.position, Vector2.down * castDist, Color.red);
-
-        if (hit.transform != null)
-        {
-            Debug.Log(hit.transform.name);
-        }
-
-        if (hit.collider != null && hit.transform.name == "obj_ground")
-        {
-            grounded = true;
-            Debug.Log("Grounded");
-        }
-        else
-        {
-            grounded = false;
-        }
-
-        //Raycast for climbing.
-
-        int layermaskW = LayerMask.GetMask("Ground");
-
-        RaycastHit2D Clim = Physics2D.Raycast(transform.position, Vector2.right, castDist, layermaskW);
-
-        Debug.DrawRay(transform.position, Vector2.right * castDist, Color.red);
-
-        if (Clim.transform != null)
-        {
-            Debug.Log(hit.transform.name);
-        }
-
-        if (Clim.collider != null && Clim.transform.name == "obj_wall")
-        {
-            wallDetected = true;
-            Debug.Log("Detected");
-        }
-        else
-        {
-            wallDetected = false;
-        }
+        CheckState();
     }
 
     private void CheckState()
@@ -166,11 +97,19 @@ public class PlayerControl : MonoBehaviour
 
     private void Jump()
     {
-        if (ifJump)
+        if (Input.GetButton("Jump")&&(ifGrounded||ifClimb))
         {
             //jump sound play
-            _myBody.velocity = new Vector2(_myBody.velocity.x,jumpSpeed*Time.fixedDeltaTime*50);
-            ifJump = false;
+            _myBody.AddForce(Vector2.up*jumpSpeed,ForceMode2D.Impulse);
+        }
+        
+        if (_myBody.velocity.y<0)
+        {
+            _myBody.velocity += Vector2.up * Physics2D.gravity.y * (_fallMultiplier - 1) * Time.deltaTime;
+        }
+        else if (_myBody.velocity.y>0&&!Input.GetButton("Jump"))
+        {
+            _myBody.velocity += Vector2.up * Physics2D.gravity.y * (_lowJumpMultiplier - 1) * Time.deltaTime;
         }
     }
 
@@ -183,9 +122,11 @@ public class PlayerControl : MonoBehaviour
     {
         if (ifDash)
         {
-            Vector2 direction = new Vector2(_horizontalMove * speed,_verticalMove * speed);
-            _myBody.AddForce(direction * jumpSpeed, ForceMode2D.Impulse);
+            Vector2 direction = new Vector2(_horizontalMove,_verticalMove);
+            _myBody.AddForce(direction * dashspeed, ForceMode2D.Impulse);
             ifDash = false;
         }
     }
+    
+    
 }
