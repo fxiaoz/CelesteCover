@@ -131,9 +131,9 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &6398551356401586048
 MonoBehaviour:
@@ -147,9 +147,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39ed99ea94486433280f5cc1b0844ba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  speed: 2
+  castDist: 0.75
+  gravityScale: 0.2
+  gravityFall: 1
+  jumpLimit: 1
   dash: 0
   jump: 0
+  climb: 0
+  grounded: 1
+  wallDetected: 0
 --- !u!82 &4175879867753822955
 AudioSource:
   m_ObjectHideFlags: 0

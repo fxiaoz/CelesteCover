@@ -6,10 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour
 {
-    //Stats
+    //Speed
     public float speed = 1f;
     float horizontalMove;
+    float verticalMove;
 
+    public float jumpReady = 1;
+
+    //Gravity
     public float castDist = 0.2f;
     public float gravityScale = 5f;
     public float gravityFall = 40f;
@@ -18,9 +22,10 @@ public class PlayerControl : MonoBehaviour
     //Bool
     public bool dash = false;
     public bool jump = false;
-    public bool climb = true;
+    public bool climb = false;
 
     public bool grounded = true;
+    public bool wallDetected = false;
 
     //Components
     Rigidbody2D myBody;
@@ -40,25 +45,19 @@ public class PlayerControl : MonoBehaviour
     {
         horizontalMove = Input.GetAxis("Horizontal");
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
+        verticalMove = Input.GetAxis("Vertical");
 
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-
-        }
-
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-
-        }
+        //if (grounded)
+        //{
+        //    jumpReady = 1;
+        //}
 
         if (Input.GetKeyDown(KeyCode.J))
         {
             if (grounded)
             {
                 jump = true;
+                //jumpReady --;
                 //jump sound play
             }
         }
@@ -66,6 +65,7 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             dash = true;
+            //jump sound play
         }
 
         if (Input.GetKeyDown(KeyCode.L))
@@ -74,8 +74,7 @@ public class PlayerControl : MonoBehaviour
             {
                 climb = false;
             }
-
-            if (!climb)
+            else
             {
                 climb = true;
             }
@@ -97,8 +96,21 @@ public class PlayerControl : MonoBehaviour
 
     void FixedUpdate()
     {
-        float moveSpeed = horizontalMove * speed;
-        myBody.velocity = new Vector3(moveSpeed, myBody.velocity.y, 0);
+        //First check for position
+
+        float moveHoriSpeed = horizontalMove * speed;
+        float moveVerSpeed = verticalMove * speed;
+
+        if(!climb)
+        {
+            myBody.velocity = new Vector3(moveHoriSpeed, myBody.velocity.y, 0);
+        }
+        if (climb)
+        {
+            myBody.velocity = new Vector3(myBody.velocity.x, moveVerSpeed, 0);
+        }
+
+        //Jump
 
         if (jump)
         {
@@ -108,12 +120,20 @@ public class PlayerControl : MonoBehaviour
             Debug.Log("jump");
         }
 
+        //Dash
+
         if (dash)
         {
 
         }
 
-        if (myBody.velocity.y > 0)
+        //Gravity
+
+        if (climb)
+        {
+            myBody.gravityScale = 0;
+        }
+        else if (myBody.velocity.y > 0)
         {
             myBody.gravityScale = gravityScale;
         }
@@ -124,9 +144,9 @@ public class PlayerControl : MonoBehaviour
 
         //Raycasting for grounding.
 
-        int layermask = LayerMask.GetMask("Ground");
+        int layermaskG = LayerMask.GetMask("Ground");
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, castDist, layermask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, castDist, layermaskG);
 
         Debug.DrawRay(transform.position, Vector2.down * castDist, Color.red);
 
@@ -145,11 +165,43 @@ public class PlayerControl : MonoBehaviour
             grounded = false;
         }
 
-        myBody.velocity = new Vector3(moveSpeed, myBody.velocity.y, 0);
+        //Raycasting for climbing.
+
+        int layermaskW = LayerMask.GetMask("Ground");
+
+        RaycastHit2D Clim = Physics2D.Raycast(transform.position, Vector2.right, castDist, layermaskW);
+
+        Debug.DrawRay(transform.position, Vector2.right * castDist, Color.red);
+
+        if (Clim.transform != null)
+        {
+            Debug.Log(hit.transform.name);
+        }
+
+        if (Clim.collider != null && Clim.transform.name == "obj_wall")
+        {
+            wallDetected = true;
+            Debug.Log("Detected");
+        }
+        else
+        {
+            wallDetected = false;
+        }
+
+        //Last check for the position
+
+        if (!climb)
+        {
+            myBody.velocity = new Vector3(moveHoriSpeed, myBody.velocity.y, 0);
+        }
+        if (climb)
+        {
+            myBody.velocity = new Vector3(myBody.velocity.x, moveVerSpeed, 0);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D Collision)
     {
-
+        //collision with lava
     }
 }
