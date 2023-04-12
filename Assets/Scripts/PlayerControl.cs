@@ -123,7 +123,7 @@ public class PlayerControl : MonoBehaviour
         if (ifDash)
         {
             Vector2 direction = new Vector2(_horizontalMove,_verticalMove);
-            _myBody.AddForce(direction * dashspeed, ForceMode2D.Impulse);
+            _myBody.AddForce(direction * dashSpeed, ForceMode2D.Impulse);
             ifDash = false;
         }
     }
