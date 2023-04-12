@@ -3,143 +3,96 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class PlayerControl : MonoBehaviour
 {
     //Speed
-    public float speed = 1f;
-    float horizontalMove;
-    float verticalMove;
+    [SerializeField] public float speed = 1f;
+    private float _horizontalMove;
+    private float _verticalMove;
 
     public float jumpReady = 1;
 
     //Gravity
-    public float castDist = 0.2f;
+    [SerializeField] public float castDist = 0.2f;
     public float gravityScale = 5f;
     public float gravityFall = 40f;
-    public float jumpLimit = 1f;
+    public float jumpSpeed = 1f;
 
-    //Bool
-    public bool dash = false;
-    public bool jump = false;
-    public bool climb = false;
+    //StateMachine
+    public bool ifDash = false;
+    public bool ifJump = false;
+    public bool ifClimb = false;
 
     public bool grounded = true;
     public bool wallDetected = false;
 
     //Components
-    Rigidbody2D myBody;
-    Animator myAnim;
-    SpriteRenderer myRend;
+    private Rigidbody2D _myBody;
+    private Animator _myAnim;
+    private SpriteRenderer _myRend;
 
     // Start is called before the first frame update
     void Start()
     {
-        myBody = GetComponent<Rigidbody2D>();
-        myAnim = GetComponent<Animator>();
-        myRend = GetComponent<SpriteRenderer>();
+        _myBody = GetComponent<Rigidbody2D>();
+        _myAnim = GetComponent<Animator>();
+        _myRend = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        horizontalMove = Input.GetAxis("Horizontal");
-
-        verticalMove = Input.GetAxis("Vertical");
-
-        //if (grounded)
-        //{
-        //    jumpReady = 1;
-        //}
-
+        _horizontalMove = Input.GetAxis("Horizontal");
+        _verticalMove = Input.GetAxis("Vertical");
+        
+        //jump check
         if (Input.GetKeyDown(KeyCode.J))
         {
             if (grounded)
             {
-                jump = true;
-                //jumpReady --;
-                //jump sound play
+                ifJump = true;
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.K))
+        //dash check
+        if (Input.GetKeyDown(KeyCode.K)&&!grounded)
         {
-            dash = true;
-            //jump sound play
+            ifDash = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.L))
+        //climb check
+        if (Input.GetKey(KeyCode.L))
         {
-            if (climb)
-            {
-                climb = false;
-            }
-            else
-            {
-                climb = true;
-            }
-        }
-
-        if(horizontalMove > 0.2f)
-        {
-
-        }
-        else if(horizontalMove < -0.2f)
-        {
-
+            ifClimb = true;
         }
         else
         {
-
+            ifClimb = false;
         }
     }
 
     void FixedUpdate()
     {
-        //First check for position
-
-        float moveHoriSpeed = horizontalMove * speed;
-        float moveVerSpeed = verticalMove * speed;
-
-        if(!climb)
-        {
-            myBody.velocity = new Vector3(moveHoriSpeed, myBody.velocity.y, 0);
-        }
-        if (climb)
-        {
-            myBody.velocity = new Vector3(myBody.velocity.x, moveVerSpeed, 0);
-        }
-
-        //Jump
-
-        if (jump)
-        {
-            myBody.AddForce(Vector2.up * jumpLimit, ForceMode2D.Impulse);
-            jump = false;
-
-            Debug.Log("jump");
-        }
-
-        //Dash
-
-        if (dash)
-        {
-
-        }
+        Move();
+        Jump();
+        Climb();
+        Dash();
 
         //Gravity
 
-        if (climb)
+        if (ifClimb)
         {
-            myBody.gravityScale = 0;
+            _myBody.gravityScale = 0;
         }
-        else if (myBody.velocity.y > 0)
+        else if (_myBody.velocity.y > 0)
         {
-            myBody.gravityScale = gravityScale;
+            _myBody.gravityScale = gravityScale;
         }
-        else if (myBody.velocity.y < 0)
+        else if (_myBody.velocity.y < 0)
         {
-            myBody.gravityScale = gravityFall;
+            _myBody.gravityScale = gravityFall;
         }
 
         //Raycasting for grounding.
@@ -165,7 +118,7 @@ public class PlayerControl : MonoBehaviour
             grounded = false;
         }
 
-        //Raycasting for climbing.
+        //Raycast for climbing.
 
         int layermaskW = LayerMask.GetMask("Ground");
 
@@ -187,21 +140,52 @@ public class PlayerControl : MonoBehaviour
         {
             wallDetected = false;
         }
+    }
 
-        //Last check for the position
+    private void CheckState()
+    {
+        
+    }
+        
+    private void Move()
+    {
+        float moveHorSpeed = _horizontalMove * speed;
+        float moveVerSpeed = _verticalMove * speed;
 
-        if (!climb)
+        if(!ifClimb)
         {
-            myBody.velocity = new Vector3(moveHoriSpeed, myBody.velocity.y, 0);
+            _myBody.velocity = new Vector3(moveHorSpeed, _myBody.velocity.y, 0);
+            //walking sound
         }
-        if (climb)
+        if (ifClimb)
         {
-            myBody.velocity = new Vector3(myBody.velocity.x, moveVerSpeed, 0);
+            _myBody.velocity = new Vector3(_myBody.velocity.x, moveVerSpeed, 0);
+            //climbing sound
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D Collision)
+    private void Jump()
     {
-        //collision with lava
+        if (ifJump)
+        {
+            //jump sound play
+            _myBody.velocity = new Vector2(_myBody.velocity.x,jumpSpeed*Time.fixedDeltaTime*50);
+            ifJump = false;
+        }
+    }
+
+    private void Climb()
+    {   
+        
+    }
+
+    private void Dash()
+    {
+        if (ifDash)
+        {
+            Vector2 direction = new Vector2(_horizontalMove * speed,_verticalMove * speed);
+            _myBody.AddForce(direction * jumpSpeed, ForceMode2D.Impulse);
+            ifDash = false;
+        }
     }
 }
