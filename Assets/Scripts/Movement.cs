@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using DG.Tweening;
 
 public class Movement : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class Movement : MonoBehaviour
     [SerializeField] public float jumpLerp = 10f;
     [SerializeField] public float slideSpeed = 5f;
 
-    private float x, y, xRaw, yRaw;
+    private float _x, _y, _xRaw, _yRaw;
     
     private bool _canMove, _isGrab, _isWallJumped, _isSlide, _isDash, _onGround, _hasDashed;
     
@@ -41,11 +42,11 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        x = Input.GetAxis("Horizontal");
-        y = Input.GetAxis("Vertical");
-        xRaw = Input.GetAxisRaw("Horizontal");
-        yRaw = Input.GetAxisRaw("Vertical");
-        Vector2 direction = new Vector2(x,y);
+        _x = Input.GetAxis("Horizontal");
+        _y = Input.GetAxis("Vertical");
+        _xRaw = Input.GetAxisRaw("Horizontal");
+        _yRaw = Input.GetAxisRaw("Vertical");
+        Vector2 direction = new Vector2(_x,_y);
         
         Walk(direction);
         //TODO walk animation
@@ -93,18 +94,18 @@ public class Movement : MonoBehaviour
         if (CollisionCheck.onGround && !_isDash)
         {
             _isWallJumped = false;
-            GetComponent<Falloptimization>().enabled = true;
+            GetComponent<FixedFalling>().enabled = true;
         }
 
         if (_isGrab&&!_isDash)
         {
             _rigidbody2D.gravityScale = 0;
-            if (x> 0.2f||x<-0.2f)
+            if (_x> 0.2f||_x<-0.2f)
             {
                 _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
             }
-            float speedModifier = y > 0 ? 0.5f : 1;
-            _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, y * (moveSpeed * speedModifier));
+            float speedModifier = _y > 0 ? 0.5f : 1;
+            _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _y * (moveSpeed * speedModifier));
         }
         else
         {
@@ -113,7 +114,7 @@ public class Movement : MonoBehaviour
 
         if (CollisionCheck.onWall&&!CollisionCheck.onGround)
         {
-            if (x!=0&&!_isGrab)
+            if (_x!=0&&!_isGrab)
             {
                 _isSlide = true;
                 Sliding();
@@ -140,9 +141,9 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.K)&&!_hasDashed)
         {
-            if (xRaw!=0||yRaw!=0)
+            if (_xRaw!=0||_yRaw!=0)
             {
-                Dash(xRaw,yRaw);
+                Dash(_xRaw,_yRaw);
             }
         }
 
@@ -165,13 +166,13 @@ public class Movement : MonoBehaviour
             return;
         }
 
-        if (x>0)
+        if (_x>0)
         {
             _side = 1;
             //todo anime flip
         }
 
-        if (x<0)
+        if (_x<0)
         {
             _side = -1;
             //todo anime flip
@@ -191,7 +192,13 @@ public class Movement : MonoBehaviour
 
     private void WallJump()
     {
-        
+        if ((_side==1&&CollisionCheck.onWallR)||(_side==-1&&CollisionCheck.onWallL))
+        {
+            _side *= -1;
+            //todo anim flip
+        }
+
+        _isWallJumped = true;
     }
 
     private void Dash(float hor, float ver)
@@ -200,27 +207,82 @@ public class Movement : MonoBehaviour
         
         _hasDashed = true;
         
-        //todo anime set dash
+        //todo anime dash
 
         _rigidbody2D.velocity = Vector2.zero;
         Vector2 direction = new Vector2(hor, ver);
         _rigidbody2D.velocity += direction.normalized * dashSpeed;
+        StartCoroutine(DashRecover());
     }
-    
 
-    
+    private IEnumerator DashRecover()
+    {
+        StartCoroutine(GroundDash());
+        DOVirtual.Float(14, 0, 0.8f, RigidbodyDrag);
+
+        //dashParticle.Play();
+        _rigidbody2D.gravityScale = 0;
+        GetComponent<FixedFalling>().enabled = false;
+        _isWallJumped = true;
+        _isDash = true;
+
+        yield return new WaitForSeconds(0.5f);
+
+        //dashParticle.Stop();
+        _rigidbody2D.gravityScale = 3;
+        GetComponent<FixedFalling>().enabled = true;
+        _isWallJumped = false;
+        _isDash = false;
+    }
+
+    private IEnumerator GroundDash()
+    {
+        yield return new WaitForSeconds(0.15f);
+        if (CollisionCheck.onGround)
+        {
+            _hasDashed = true;
+        }
+    }
+
     private void Landing()
     {
         _hasDashed = false;
         _isDash = false;
-        //todo side=animator.spriteRender.flip ? -1:1
+        //todo character sprite flip
         //jumpParticle.Play();
     }
 
     private void Sliding()
     {
+        if (CollisionCheck.wallSide!=_side)
+        {
+            //todo anim flip
+        }
+
+        if (!_canMove)
+        {
+            return;
+        }
         
+        //检测是否朝向墙体方向运动
+        bool isPushing = (_rigidbody2D.velocity.x > 0 && CollisionCheck.onWallR) || (_rigidbody2D.velocity.x < 0 && CollisionCheck.onWallL);
+        float force = isPushing ? 0 : _rigidbody2D.velocity.x;
+        _rigidbody2D.velocity = new Vector2(force, -slideSpeed);
     }
+    
+    IEnumerator DisableMovement(float time)
+    {
+        _canMove = false;
+        yield return new WaitForSeconds(time);
+        _canMove = true;
+    }
+    
+    void RigidbodyDrag(float x)
+    {
+        _rigidbody2D.drag = x;
+    }
+    
+    //todo wall particle method
     
     int ParticleSide()
     {
