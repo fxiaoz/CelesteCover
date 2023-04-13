@@ -9,7 +9,7 @@ public class CollisionCheck : MonoBehaviour
     public static bool onGround, onWall, onWallR, onWallL;
     public static int wallSide;
 
-    [SerializeField]public float collisionRadius = 0.25f;
+    [SerializeField]public float collisionRadius = 1f;
     public Vector2 bottomOffset, rightOffset, leftOffset;
     
     // Start is called before the first frame update
