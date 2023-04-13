@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8113179305430662920}
   - component: {fileID: 8142833730746568060}
   - component: {fileID: -6083195701216801865}
-  - component: {fileID: 6398551356401586048}
   - component: {fileID: 4175879867753822955}
   m_Layer: 0
   m_Name: obj_player
@@ -135,28 +134,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &6398551356401586048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8113179305430662919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39ed99ea94486433280f5cc1b0844ba3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 2
-  castDist: 0.75
-  gravityScale: 0.2
-  gravityFall: 1
-  jumpLimit: 1
-  dash: 0
-  jump: 0
-  climb: 0
-  grounded: 1
-  wallDetected: 0
 --- !u!82 &4175879867753822955
 AudioSource:
   m_ObjectHideFlags: 0

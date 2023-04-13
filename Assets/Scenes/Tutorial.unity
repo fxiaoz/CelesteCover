@@ -207,6 +207,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &642479694 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8113179305430662919, guid: 9a457e67a68d84f2baee798d81204f4b, type: 3}
+  m_PrefabInstance: {fileID: 8113179306148606480}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &642479701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642479694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e56705a20b12f9438b0c4626fa069e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 10
+  jumpForce: 50
+  dashSpeed: 20
+  jumpLerp: 10
+  slideSpeed: 5
+  dashParticle: {fileID: 0}
+  jumpParticle: {fileID: 0}
+  wallJumpParticle: {fileID: 0}
+  slideParticle: {fileID: 0}
 --- !u!1 &1459677251
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,7 +498,7 @@ GameObject:
   - component: {fileID: 2013399617}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -505,36 +531,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -6083195701216801865, guid: 9a457e67a68d84f2baee798d81204f4b, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -6083195701216801865, guid: 9a457e67a68d84f2baee798d81204f4b, type: 3}
       propertyPath: m_Interpolate
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -6083195701216801865, guid: 9a457e67a68d84f2baee798d81204f4b, type: 3}
       propertyPath: m_CollisionDetection
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6398551356401586048, guid: 9a457e67a68d84f2baee798d81204f4b, type: 3}
-      propertyPath: climb
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6398551356401586048, guid: 9a457e67a68d84f2baee798d81204f4b, type: 3}
-      propertyPath: speed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6398551356401586048, guid: 9a457e67a68d84f2baee798d81204f4b, type: 3}
-      propertyPath: castDist
-      value: 0.55
-      objectReference: {fileID: 0}
-    - target: {fileID: 6398551356401586048, guid: 9a457e67a68d84f2baee798d81204f4b, type: 3}
-      propertyPath: jumpLimit
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6398551356401586048, guid: 9a457e67a68d84f2baee798d81204f4b, type: 3}
-      propertyPath: gravityFall
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6398551356401586048, guid: 9a457e67a68d84f2baee798d81204f4b, type: 3}
-      propertyPath: gravityScale
-      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 8113179305430662919, guid: 9a457e67a68d84f2baee798d81204f4b, type: 3}
       propertyPath: m_Name

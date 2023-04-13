@@ -14,8 +14,9 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] public float dashSpeed;
     [SerializeField]public float jumpSpeed;
     
-    private float _horizontalMove;
-    private float _verticalMove;
+    public float _horizontalMove;
+    public float _verticalMove;
+    public Vector2 direction;
     private readonly float _fallMultiplier=2.5f;
     private readonly float _lowJumpMultiplier = 2f;
     
@@ -45,6 +46,8 @@ public class PlayerControl : MonoBehaviour
     {
         _horizontalMove = Input.GetAxis("Horizontal");
         _verticalMove = Input.GetAxis("Vertical");
+
+        //ifGrounded = Physics2D.OverlapCircle((Vector2)transform.position+bottomOffset, collision);
         
         //dash check
         if (Input.GetKeyDown(KeyCode.K)&&!ifGrounded)
@@ -122,7 +125,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (ifDash)
         {
-            Vector2 direction = new Vector2(_horizontalMove,_verticalMove);
+            direction = new Vector2(_horizontalMove,_verticalMove);
             _myBody.AddForce(direction * dashSpeed, ForceMode2D.Impulse);
             ifDash = false;
         }
