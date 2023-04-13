@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using DG.Tweening;
 
 public class Movement : MonoBehaviour
 {
@@ -206,9 +207,11 @@ public class Movement : MonoBehaviour
         Vector2 direction = new Vector2(hor, ver);
         _rigidbody2D.velocity += direction.normalized * dashSpeed;
     }
-    
 
-    
+    private IEnumerator DashCD;
+
+
+
     private void Landing()
     {
         _hasDashed = false;
