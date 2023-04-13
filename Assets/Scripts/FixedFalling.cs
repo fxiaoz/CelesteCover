@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Falloptimization : MonoBehaviour
+public class FixedFalling : MonoBehaviour
 {
     private Rigidbody2D _rigidbody2D;
     public float fallMultiplier = 2.5f;
