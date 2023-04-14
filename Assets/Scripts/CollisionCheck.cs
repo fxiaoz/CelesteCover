@@ -32,4 +32,15 @@ public class CollisionCheck : MonoBehaviour
         //return side of wall(R:1, L:-1)
         wallSide = onWallR ? -1 : 1;
     }
+    
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+
+        var positions = new Vector2[] { bottomOffset, rightOffset, leftOffset };
+
+        Gizmos.DrawWireSphere((Vector2)transform.position  + bottomOffset, collisionRadius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + rightOffset, collisionRadius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + leftOffset, collisionRadius);
+    }
 }

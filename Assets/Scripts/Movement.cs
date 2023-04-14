@@ -50,7 +50,6 @@ public class Movement : MonoBehaviour
         
         Walk(direction);
         //TODO walk animation
-
         StateMachine();
     }
 
@@ -85,7 +84,7 @@ public class Movement : MonoBehaviour
             _isSlide = false;
         }
 
-        if (Input.GetKey(KeyCode.L) || !CollisionCheck.onWall || !_canMove)
+        if (Input.GetKeyUp(KeyCode.L) || !CollisionCheck.onWall || !_canMove)
         {
             _isGrab = false;
             _isSlide = false;
@@ -197,6 +196,13 @@ public class Movement : MonoBehaviour
             _side *= -1;
             //todo anim flip
         }
+        
+        StopCoroutine(DisableMovement(0));
+        StartCoroutine(DisableMovement(0.1f));
+        
+        Debug.Log("yes");
+        Vector2 direction = CollisionCheck.onWallR ? Vector2.left : Vector2.right;
+        Jump((Vector2.up / 1.5f + direction / 1.5f), true);
 
         _isWallJumped = true;
     }
@@ -233,6 +239,10 @@ public class Movement : MonoBehaviour
         GetComponent<FixedFalling>().enabled = true;
         _isWallJumped = false;
         _isDash = false;
+        if (CollisionCheck.onGround)
+        {
+            _hasDashed = false;
+        }
     }
 
     private IEnumerator GroundDash()
