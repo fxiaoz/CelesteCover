@@ -73,7 +73,7 @@ public class Movement : MonoBehaviour
 
     private void StateMachine()
     {
-        if (CollisionCheck.onWall&&Input.GetKey(KeyCode.L)&&_canMove)
+        if (CollisionCheck.onWall&&Input.GetButton("Grab")&&_canMove)
         {
             if (_side!=CollisionCheck.wallSide)
             {
@@ -84,7 +84,7 @@ public class Movement : MonoBehaviour
             _isSlide = false;
         }
 
-        if (Input.GetKeyUp(KeyCode.L) || !CollisionCheck.onWall || !_canMove)
+        if (Input.GetButtonUp("Grab") || !CollisionCheck.onWall || !_canMove)
         {
             _isGrab = false;
             _isSlide = false;
@@ -138,7 +138,7 @@ public class Movement : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.K)&&!_hasDashed)
+        if (Input.GetButtonDown("Dash")&&!_hasDashed)
         {
             if (_xRaw!=0||_yRaw!=0)
             {
