@@ -191,20 +191,27 @@ public class Movement : MonoBehaviour
 
     private void WallJump()
     {
-        if ((_side==1&&CollisionCheck.onWallR)||(_side==-1&&CollisionCheck.onWallL))
+        if (_x==0)
         {
-            _side *= -1;
-            //todo anim flip
+            StopCoroutine(DisableMovement(0));
+            StartCoroutine(DisableMovement(0.1f));
+            Jump(Vector2.up,true);
         }
-        
-        StopCoroutine(DisableMovement(0));
-        StartCoroutine(DisableMovement(0.1f));
-        
-        Debug.Log("yes");
-        Vector2 direction = CollisionCheck.onWallL ? Vector2.left : Vector2.right;
-        Jump((Vector2.up / 1.5f + direction / 1.5f), true);
-
-        _isWallJumped = true;
+        else
+        {
+            if ((_side==1&&CollisionCheck.onWallR)||(_side==-1&&CollisionCheck.onWallL))
+            {
+                _side *= -1;
+                //todo anim flip
+            }
+            
+            StopCoroutine(DisableMovement(0));
+            StartCoroutine(DisableMovement(0.1f));
+            
+            Vector2 direction = CollisionCheck.onWallL ? Vector2.left : Vector2.right;
+            Jump((Vector2.up / 1.5f + direction / 1.5f), true);
+            _isWallJumped = true;
+        }
     }
 
     private void Dash(float hor, float ver)
