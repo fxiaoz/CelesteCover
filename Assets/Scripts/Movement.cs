@@ -73,7 +73,7 @@ public class Movement : MonoBehaviour
 
     private void StateMachine()
     {
-        if (CollisionCheck.onWall&&Input.GetKey(KeyCode.L)&&_canMove)
+        if (CollisionCheck.onWall&&Input.GetButton("Grab")&&_canMove)
         {
             if (_side!=CollisionCheck.wallSide)
             {
@@ -84,7 +84,7 @@ public class Movement : MonoBehaviour
             _isSlide = false;
         }
 
-        if (Input.GetKeyUp(KeyCode.L) || !CollisionCheck.onWall || !_canMove)
+        if (Input.GetButtonUp("Grab") || !CollisionCheck.onWall || !_canMove)
         {
             _isGrab = false;
             _isSlide = false;
@@ -125,7 +125,7 @@ public class Movement : MonoBehaviour
             _isSlide = false;
         }
 
-        if (Input.GetButton("Jump"))
+        if (Input.GetButtonDown("Jump"))
         {
             //todo jump animation
             if (CollisionCheck.onGround)
@@ -138,7 +138,7 @@ public class Movement : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.K)&&!_hasDashed)
+        if (Input.GetButtonDown("Dash")&&!_hasDashed)
         {
             if (_xRaw!=0||_yRaw!=0)
             {
@@ -178,10 +178,10 @@ public class Movement : MonoBehaviour
         }
     }
 
-    private void Jump(Vector2 direction,bool wall)
+    private void Jump(Vector2 direction,bool ifWallJump)
     {
         //slideParticle.transform.parent.localScale = new Vector3(ParticleSide(), 1, 1);
-        //ParticleSystem particle = wall ? wallJumpParticle : jumpParticle;
+        //ParticleSystem particle = ifWallJump ? wallJumpParticle : jumpParticle;
 
         _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
         _rigidbody2D.velocity += direction * jumpForce;
@@ -191,20 +191,27 @@ public class Movement : MonoBehaviour
 
     private void WallJump()
     {
-        if ((_side==1&&CollisionCheck.onWallR)||(_side==-1&&CollisionCheck.onWallL))
+        if (_x==0)
         {
-            _side *= -1;
-            //todo anim flip
+            StopCoroutine(DisableMovement(0));
+            StartCoroutine(DisableMovement(0.1f));
+            Jump(Vector2.up,true);
         }
-        
-        StopCoroutine(DisableMovement(0));
-        StartCoroutine(DisableMovement(0.1f));
-        
-        Debug.Log("yes");
-        Vector2 direction = CollisionCheck.onWallR ? Vector2.left : Vector2.right;
-        Jump((Vector2.up / 1.5f + direction / 1.5f), true);
-
-        _isWallJumped = true;
+        else
+        {
+            if ((_side==1&&CollisionCheck.onWallR)||(_side==-1&&CollisionCheck.onWallL))
+            {
+                _side *= -1;
+                //todo anim flip
+            }
+            
+            StopCoroutine(DisableMovement(0));
+            StartCoroutine(DisableMovement(0.1f));
+            
+            Vector2 direction = CollisionCheck.onWallL ? Vector2.left : Vector2.right;
+            Jump((Vector2.up / 1.5f + direction / 1.5f), true);
+            _isWallJumped = true;
+        }
     }
 
     private void Dash(float hor, float ver)
@@ -259,7 +266,7 @@ public class Movement : MonoBehaviour
         _hasDashed = false;
         _isDash = false;
         //todo character sprite flip
-        //jumpParticle.Play();
+        //todo jumpParticle.Play();
     }
 
     private void Sliding()
