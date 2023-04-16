@@ -19,6 +19,8 @@ public class Movement : MonoBehaviour
     private float _x, _y, _xRaw, _yRaw;
     
     private bool _canMove, _isGrab, _isWallJumped, _isSlide, _isDash, _onGround, _hasDashed;
+
+    public bool IsMoving, IsClimbing, IsDashing, IsJumping;
     
     public ParticleSystem dashParticle,jumpParticle,wallJumpParticle,slideParticle;
 
@@ -37,6 +39,11 @@ public class Movement : MonoBehaviour
         _isWallJumped = false;
         _onGround = true;
         _hasDashed = false;
+
+        IsMoving = false;
+        IsClimbing = false;
+        IsDashing = false;
+        IsJumping = false;
     }
 
     // Update is called once per frame
@@ -47,14 +54,34 @@ public class Movement : MonoBehaviour
         _xRaw = Input.GetAxisRaw("Horizontal");
         _yRaw = Input.GetAxisRaw("Vertical");
         Vector2 direction = new Vector2(_x,_y);
-        
+
+        Flip(); 
+
         Walk(direction);
         //TODO walk animation
         StateMachine();
     }
 
+    private void Flip()
+    {
+        if (_x > 0)
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = Mathf.Abs(scale.x);
+            transform.localScale = scale;
+        }
+        else if (_x < 0)
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = -Mathf.Abs(scale.x);
+            transform.localScale = scale;
+        }
+    }
+
     private void Walk(Vector2 direction)
     {
+        IsMoving = false;
+
         if (!_canMove||_isGrab)
         {
             return;
@@ -63,6 +90,11 @@ public class Movement : MonoBehaviour
         if (!_isWallJumped)
         {
             _rigidbody2D.velocity = new Vector2(direction.x * moveSpeed, _rigidbody2D.velocity.y);
+
+            if(direction.x != 0)
+            {
+                IsMoving = true;
+            }
         }
         else
         {
@@ -96,6 +128,8 @@ public class Movement : MonoBehaviour
             GetComponent<FixedFalling>().enabled = true;
         }
 
+        IsClimbing = false;
+
         if (_isGrab&&!_isDash)
         {
             _rigidbody2D.gravityScale = 0;
@@ -105,6 +139,8 @@ public class Movement : MonoBehaviour
             }
             float speedModifier = _y > 0 ? 0.5f : 1;
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _y * (moveSpeed * speedModifier));
+
+            IsClimbing = true;
         }
         else
         {
@@ -125,9 +161,15 @@ public class Movement : MonoBehaviour
             _isSlide = false;
         }
 
+        IsJumping = false;
+
         if (Input.GetButtonDown("Jump"))
         {
             //todo jump animation
+
+            //IsJumping = true;
+            //cuz jump animation is not made yet
+
             if (CollisionCheck.onGround)
             {
                 Jump(Vector2.up,false);
@@ -137,6 +179,8 @@ public class Movement : MonoBehaviour
                 WallJump();
             }
         }
+
+        IsDashing = false;
 
         if (Input.GetButtonDown("Dash")&&!_hasDashed)
         {
@@ -160,6 +204,7 @@ public class Movement : MonoBehaviour
         //todo wall particle effect
 
         //如果爬墙、滑墙、定格状态则跳过翻转
+        //if climbing, sliding, or "freezing", then skip the slipping
         if (_isGrab||_isSlide||!_canMove)
         {
             return;
@@ -219,8 +264,10 @@ public class Movement : MonoBehaviour
         //todo camera shaking
         
         _hasDashed = true;
-        
+
         //todo anime dash
+
+        IsDashing = true;
 
         _rigidbody2D.velocity = Vector2.zero;
         Vector2 direction = new Vector2(hor, ver);
@@ -282,6 +329,7 @@ public class Movement : MonoBehaviour
         }
         
         //检测是否朝向墙体方向运动
+        //checking that if it is moving toward the wall
         bool isPushing = (_rigidbody2D.velocity.x > 0 && CollisionCheck.onWallR) || (_rigidbody2D.velocity.x < 0 && CollisionCheck.onWallL);
         float force = isPushing ? 0 : _rigidbody2D.velocity.x;
         _rigidbody2D.velocity = new Vector2(force, -slideSpeed);
