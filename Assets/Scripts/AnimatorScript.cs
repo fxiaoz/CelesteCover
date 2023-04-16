@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TAnimator : MonoBehaviour
+public class AnimatorScript : MonoBehaviour
 {
     private Animator _animator;
     private SpriteRenderer _sprite;
@@ -26,6 +26,10 @@ public class TAnimator : MonoBehaviour
         //todo set bool Slide
         //todo set bool Dash
         //todo set bool canMove
+        _animator.SetBool("Walking", _movement.IsMoving);
+        _animator.SetBool("Climbing", _movement.IsClimbing);
+        _animator.SetBool("Dashing", _movement.IsDashing);
+        _animator.SetBool("Jumping", _movement.IsJumping);
     }
 
     public void SetHorizontalMovement(float x,float y, float yVel)

@@ -9,6 +9,7 @@ public class Movement : MonoBehaviour
 {
     private BoxCollider2D _collision2D;
     private Rigidbody2D _rigidbody2D;
+    private AnimatorScript _anim;
 
     [SerializeField] public float moveSpeed = 10f;
     [SerializeField] public float jumpForce = 50f;
@@ -32,6 +33,7 @@ public class Movement : MonoBehaviour
     {
         _collision2D = GetComponent<BoxCollider2D>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
+        _anim = GetComponent<AnimatorScript>();
         _canMove = true;
         _isGrab = false;
         _isDash = false;
@@ -58,7 +60,7 @@ public class Movement : MonoBehaviour
         Flip(); 
 
         Walk(direction);
-        //TODO walk animation
+        
         StateMachine();
     }
 

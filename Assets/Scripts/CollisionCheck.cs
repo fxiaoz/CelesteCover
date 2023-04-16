@@ -33,6 +33,7 @@ public class CollisionCheck : MonoBehaviour
         wallSide = onWallR ? -1 : 1;
     }
     
+    //visible collider
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
