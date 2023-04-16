@@ -301,10 +301,14 @@ public class Movement : MonoBehaviour
     
     //todo wall particle method
     
-    int ParticleSide()
+    private int ParticleSide()
     {
         int particleSide = CollisionCheck.onWallR ? 1 : -1;
         return particleSide;
     }
 
+    public bool ifOnWall()
+    {
+        return (_isGrab || _isSlide);
+    }
 }
