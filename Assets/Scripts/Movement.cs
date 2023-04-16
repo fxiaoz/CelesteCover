@@ -94,6 +94,7 @@ public class Movement : MonoBehaviour
             var velocity = _rigidbody2D.velocity;
             _rigidbody2D.velocity = Vector2.Lerp(velocity, (new Vector2(direction.x * moveSpeed, velocity.y)), jumpLerp * Time.deltaTime);
         }
+        Flip();
     }
 
     private void StateMachine()
