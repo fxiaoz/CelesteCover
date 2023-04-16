@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 using DG.Tweening;
+using UnityEngine.Serialization;
 
 public class Movement : MonoBehaviour
 {
     private BoxCollider2D _collision2D;
     private Rigidbody2D _rigidbody2D;
-    private AnimatorScript _anim;
+    private AnimatorScript _animator;
 
     [SerializeField] public float moveSpeed = 10f;
     [SerializeField] public float jumpForce = 50f;
@@ -19,10 +20,9 @@ public class Movement : MonoBehaviour
 
     private float _x, _y, _xRaw, _yRaw;
     
-    private bool _canMove, _isGrab, _isWallJumped, _isSlide, _isDash, _onGround, _hasDashed;
+    public bool canMove, isGrab, isSlide, isDash, onGround;
+    private bool _hasDashed, _isWallJumped;
 
-    public bool IsMoving, IsClimbing, IsDashing, IsJumping;
-    
     public ParticleSystem dashParticle,jumpParticle,wallJumpParticle,slideParticle;
 
     //character facing (R:1, L:-1)
@@ -33,19 +33,14 @@ public class Movement : MonoBehaviour
     {
         _collision2D = GetComponent<BoxCollider2D>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        _anim = GetComponent<AnimatorScript>();
-        _canMove = true;
-        _isGrab = false;
-        _isDash = false;
-        _isSlide = false;
+        _animator = GetComponent<AnimatorScript>();
+        canMove = true;
+        isGrab = false;
+        isDash = false;
+        isSlide = false;
         _isWallJumped = false;
-        _onGround = true;
+        onGround = true;
         _hasDashed = false;
-
-        IsMoving = false;
-        IsClimbing = false;
-        IsDashing = false;
-        IsJumping = false;
     }
 
     // Update is called once per frame
@@ -55,12 +50,15 @@ public class Movement : MonoBehaviour
         _y = Input.GetAxis("Vertical");
         _xRaw = Input.GetAxisRaw("Horizontal");
         _yRaw = Input.GetAxisRaw("Vertical");
-        Vector2 direction = new Vector2(_x,_y);
-
-        Flip(); 
-
-        Walk(direction);
         
+        //无停止惯性
+        Vector2 direction = _xRaw!=0 ? new Vector2(_x, _y) : new Vector2(_xRaw, _y);
+        //有停止惯性
+        //Vector2 direction=new Vector2(_x,_y);
+
+        Flip();
+        Walk(direction);
+        _animator.SetHorizontalMovement(_x,_y,_rigidbody2D.velocity.y);
         StateMachine();
     }
 
@@ -82,9 +80,7 @@ public class Movement : MonoBehaviour
 
     private void Walk(Vector2 direction)
     {
-        IsMoving = false;
-
-        if (!_canMove||_isGrab)
+        if (!canMove||isGrab)
         {
             return;
         }
@@ -92,11 +88,6 @@ public class Movement : MonoBehaviour
         if (!_isWallJumped)
         {
             _rigidbody2D.velocity = new Vector2(direction.x * moveSpeed, _rigidbody2D.velocity.y);
-
-            if(direction.x != 0)
-            {
-                IsMoving = true;
-            }
         }
         else
         {
@@ -107,32 +98,30 @@ public class Movement : MonoBehaviour
 
     private void StateMachine()
     {
-        if (CollisionCheck.onWall&&Input.GetButton("Grab")&&_canMove)
+        if (CollisionCheck.onWall&&Input.GetButton("Grab")&&canMove)
         {
             if (_side!=CollisionCheck.wallSide)
             {
-                //TODO Flip(side*-1)
+                _animator.Flip(_side*-1);
             }
 
-            _isGrab = true;
-            _isSlide = false;
+            isGrab = true;
+            isSlide = false;
         }
 
-        if (Input.GetButtonUp("Grab") || !CollisionCheck.onWall || !_canMove)
+        if (Input.GetButtonUp("Grab") || !CollisionCheck.onWall || !canMove)
         {
-            _isGrab = false;
-            _isSlide = false;
+            isGrab = false;
+            isSlide = false;
         }
 
-        if (CollisionCheck.onGround && !_isDash)
+        if (CollisionCheck.onGround && !isDash)
         {
             _isWallJumped = false;
             GetComponent<FixedFalling>().enabled = true;
         }
 
-        IsClimbing = false;
-
-        if (_isGrab&&!_isDash)
+        if (isGrab&&!isDash)
         {
             _rigidbody2D.gravityScale = 0;
             if (_x> 0.2f||_x<-0.2f)
@@ -141,8 +130,6 @@ public class Movement : MonoBehaviour
             }
             float speedModifier = _y > 0 ? 0.5f : 1;
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _y * (moveSpeed * speedModifier));
-
-            IsClimbing = true;
         }
         else
         {
@@ -151,27 +138,21 @@ public class Movement : MonoBehaviour
 
         if (CollisionCheck.onWall&&!CollisionCheck.onGround)
         {
-            if (_x!=0&&!_isGrab)
+            if (_x!=0&&!isGrab)
             {
-                _isSlide = true;
+                isSlide = true;
                 Sliding();
             }
         }
 
         if (!CollisionCheck.onWall||CollisionCheck.onGround)
         {
-            _isSlide = false;
+            isSlide = false;
         }
-
-        IsJumping = false;
 
         if (Input.GetButtonDown("Jump"))
         {
-            //todo jump animation
-
-            //IsJumping = true;
-            //cuz jump animation is not made yet
-
+            _animator.SetTrigger("Jump");
             if (CollisionCheck.onGround)
             {
                 Jump(Vector2.up,false);
@@ -182,8 +163,6 @@ public class Movement : MonoBehaviour
             }
         }
 
-        IsDashing = false;
-
         if (Input.GetButtonDown("Dash")&&!_hasDashed)
         {
             if (_xRaw!=0||_yRaw!=0)
@@ -192,22 +171,22 @@ public class Movement : MonoBehaviour
             }
         }
 
-        if (CollisionCheck.onGround&&!_onGround)
+        if (CollisionCheck.onGround&&!onGround)
         {
             Landing();
-            _onGround = true;
+            onGround = true;
         }
 
-        if (!CollisionCheck.onGround&&_onGround)
+        if (!CollisionCheck.onGround&&onGround)
         {
-            _onGround = false;
+            onGround = false;
         }
         
         //todo wall particle effect
 
         //如果爬墙、滑墙、定格状态则跳过翻转
-        //if climbing, sliding, or "freezing", then skip the slipping
-        if (_isGrab||_isSlide||!_canMove)
+        //if climbing, sliding, or "freezing", then skip the flipping
+        if (isGrab||isSlide||!canMove)
         {
             return;
         }
@@ -215,13 +194,13 @@ public class Movement : MonoBehaviour
         if (_x>0)
         {
             _side = 1;
-            //todo anime flip
+            _animator.Flip(_side);
         }
 
         if (_x<0)
         {
             _side = -1;
-            //todo anime flip
+            _animator.Flip(_side);
         }
     }
 
@@ -249,7 +228,7 @@ public class Movement : MonoBehaviour
             if ((_side==1&&CollisionCheck.onWallR)||(_side==-1&&CollisionCheck.onWallL))
             {
                 _side *= -1;
-                //todo anim flip
+                _animator.Flip(_side);
             }
             
             StopCoroutine(DisableMovement(0));
@@ -267,9 +246,7 @@ public class Movement : MonoBehaviour
         
         _hasDashed = true;
 
-        //todo anime dash
-
-        IsDashing = true;
+        _animator.SetTrigger("Dash");
 
         _rigidbody2D.velocity = Vector2.zero;
         Vector2 direction = new Vector2(hor, ver);
@@ -282,19 +259,19 @@ public class Movement : MonoBehaviour
         StartCoroutine(GroundDash());
         DOVirtual.Float(14, 0, 0.8f, RigidbodyDrag);
 
-        //dashParticle.Play();
+        //todo dashParticle.Play();
         _rigidbody2D.gravityScale = 0;
         GetComponent<FixedFalling>().enabled = false;
         _isWallJumped = true;
-        _isDash = true;
+        isDash = true;
 
         yield return new WaitForSeconds(0.5f);
 
-        //dashParticle.Stop();
+        //todo dashParticle.Stop();
         _rigidbody2D.gravityScale = 3;
         GetComponent<FixedFalling>().enabled = true;
         _isWallJumped = false;
-        _isDash = false;
+        isDash = false;
         if (CollisionCheck.onGround)
         {
             _hasDashed = false;
@@ -313,8 +290,8 @@ public class Movement : MonoBehaviour
     private void Landing()
     {
         _hasDashed = false;
-        _isDash = false;
-        //todo character sprite flip
+        isDash = false;
+        _side = _animator.sprite.flipX ? -1 : 1;
         //todo jumpParticle.Play();
     }
 
@@ -322,15 +299,14 @@ public class Movement : MonoBehaviour
     {
         if (CollisionCheck.wallSide!=_side)
         {
-            //todo anim flip
+            _animator.Flip(_side*-1);
         }
 
-        if (!_canMove)
+        if (!canMove)
         {
             return;
         }
         
-        //检测是否朝向墙体方向运动
         //checking that if it is moving toward the wall
         bool isPushing = (_rigidbody2D.velocity.x > 0 && CollisionCheck.onWallR) || (_rigidbody2D.velocity.x < 0 && CollisionCheck.onWallL);
         float force = isPushing ? 0 : _rigidbody2D.velocity.x;
@@ -339,9 +315,9 @@ public class Movement : MonoBehaviour
     
     IEnumerator DisableMovement(float time)
     {
-        _canMove = false;
+        canMove = false;
         yield return new WaitForSeconds(time);
-        _canMove = true;
+        canMove = true;
     }
     
     void RigidbodyDrag(float x)
@@ -355,10 +331,5 @@ public class Movement : MonoBehaviour
     {
         int particleSide = CollisionCheck.onWallR ? 1 : -1;
         return particleSide;
-    }
-
-    public bool ifOnWall()
-    {
-        return (_isGrab || _isSlide);
     }
 }
