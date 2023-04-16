@@ -784,6 +784,7 @@ MonoBehaviour:
   dashSpeed: 50
   jumpLerp: 10
   slideSpeed: 5
+  IsMoving: 0
   dashParticle: {fileID: 0}
   jumpParticle: {fileID: 0}
   wallJumpParticle: {fileID: 0}
@@ -821,18 +822,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fallMultiplier: 2.5
   lowJumpMultiplier: 2
---- !u!114 &642479715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 642479694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ab333b41fd777843ba16073c8f206fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &642479716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -843,6 +832,38 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dadcd0a6b842e9844832de2563b35f83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &642479717
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642479694}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ffc389b088f4d4bab85acf06ce8df27d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &642479718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642479694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ab333b41fd777843ba16073c8f206fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &892079581
