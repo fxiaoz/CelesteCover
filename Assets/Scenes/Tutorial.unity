@@ -785,6 +785,9 @@ MonoBehaviour:
   jumpLerp: 10
   slideSpeed: 5
   IsMoving: 0
+  IsClimbing: 0
+  IsDashing: 0
+  IsJumping: 0
   dashParticle: {fileID: 0}
   jumpParticle: {fileID: 0}
   wallJumpParticle: {fileID: 0}
@@ -863,7 +866,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 642479694}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ab333b41fd777843ba16073c8f206fb, type: 3}
+  m_Script: {fileID: 11500000, guid: e0316974174a9cc4ca46b55828db8204, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &892079581
@@ -1476,6 +1479,10 @@ PrefabInstance:
     - target: {fileID: -6083195701216801865, guid: 9a457e67a68d84f2baee798d81204f4b, type: 3}
       propertyPath: m_BodyType
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6083195701216801865, guid: 9a457e67a68d84f2baee798d81204f4b, type: 3}
+      propertyPath: m_Material
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: -6083195701216801865, guid: 9a457e67a68d84f2baee798d81204f4b, type: 3}
       propertyPath: m_Constraints

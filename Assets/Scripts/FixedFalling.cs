@@ -7,6 +7,7 @@ public class FixedFalling : MonoBehaviour
     private Rigidbody2D _rigidbody2D;
     public float fallMultiplier = 2.5f;
     public float lowJumpMultiplier = 2f;
+    private Animator _animator;
 
     void Start()
     {
