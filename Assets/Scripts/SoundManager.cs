@@ -25,8 +25,38 @@ public class SoundManager : MonoBehaviour
         _myAudioSource.PlayOneShot(jump);
     }
 
+    public void Land()
+    {
+        
+    }
+
     public void Dash()
     {
         _myAudioSource.PlayOneShot(dash);
+    }
+
+    public void Slide()
+    {
+        
+    }
+
+    public void Climb()
+    {
+        
+    }
+
+    public void Walk()
+    {
+        
+    }
+
+    public void Grab()
+    {
+        
+    }
+
+    public void Meow()
+    {
+        
     }
 }
