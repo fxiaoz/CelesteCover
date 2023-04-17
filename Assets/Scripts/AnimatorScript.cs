@@ -55,7 +55,7 @@ public class AnimatorScript : MonoBehaviour
             if ((side == -1 && sprite.flipX)||(side == 1 && !sprite.flipX))
                 return;
         }
-        
+
         bool state = (side != 1);
         sprite.flipX = state;
     }

@@ -784,10 +784,11 @@ MonoBehaviour:
   dashSpeed: 50
   jumpLerp: 10
   slideSpeed: 5
-  IsMoving: 0
-  IsClimbing: 0
-  IsDashing: 0
-  IsJumping: 0
+  canMove: 0
+  isGrab: 0
+  isSlide: 0
+  isDash: 0
+  onGround: 0
   dashParticle: {fileID: 0}
   jumpParticle: {fileID: 0}
   wallJumpParticle: {fileID: 0}
@@ -869,6 +870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0316974174a9cc4ca46b55828db8204, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
 --- !u!1 &892079581
 GameObject:
   m_ObjectHideFlags: 0
@@ -1558,7 +1560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8142833730746568060, guid: 9a457e67a68d84f2baee798d81204f4b, type: 3}
       propertyPath: m_Size.x
-      value: 0.8427096
+      value: 0.80413806
       objectReference: {fileID: 0}
     - target: {fileID: 8142833730746568060, guid: 9a457e67a68d84f2baee798d81204f4b, type: 3}
       propertyPath: m_Size.y
@@ -1566,7 +1568,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8142833730746568060, guid: 9a457e67a68d84f2baee798d81204f4b, type: 3}
       propertyPath: m_Offset.x
-      value: -0.016228348
+      value: 0.0030574203
       objectReference: {fileID: 0}
     - target: {fileID: 8142833730746568060, guid: 9a457e67a68d84f2baee798d81204f4b, type: 3}
       propertyPath: m_Offset.y

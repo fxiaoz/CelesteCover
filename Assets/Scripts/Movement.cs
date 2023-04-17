@@ -49,33 +49,16 @@ public class Movement : MonoBehaviour
         _x = Input.GetAxis("Horizontal");
         _y = Input.GetAxis("Vertical");
         _xRaw = Input.GetAxisRaw("Horizontal");
-        _yRaw = Input.GetAxisRaw("Vertical");
+        _yRaw = Input.GetAxisRaw("Vertical");   
         
         //无停止惯性
         Vector2 direction = _xRaw!=0 ? new Vector2(_x, _y) : new Vector2(_xRaw, _y);
         //有停止惯性
         //Vector2 direction=new Vector2(_x,_y);
-
-        Flip();
+        
         Walk(direction);
         _animator.SetHorizontalMovement(_x,_y,_rigidbody2D.velocity.y);
         StateMachine();
-    }
-
-    private void Flip()
-    {
-        if (_x > 0)
-        {
-            Vector3 scale = transform.localScale;
-            scale.x = Mathf.Abs(scale.x);
-            transform.localScale = scale;
-        }
-        else if (_x < 0)
-        {
-            Vector3 scale = transform.localScale;
-            scale.x = -Mathf.Abs(scale.x);
-            transform.localScale = scale;
-        }
     }
 
     private void Walk(Vector2 direction)
@@ -94,7 +77,6 @@ public class Movement : MonoBehaviour
             var velocity = _rigidbody2D.velocity;
             _rigidbody2D.velocity = Vector2.Lerp(velocity, (new Vector2(direction.x * moveSpeed, velocity.y)), jumpLerp * Time.deltaTime);
         }
-        Flip();
     }
 
     private void StateMachine()
@@ -184,9 +166,8 @@ public class Movement : MonoBehaviour
         }
         
         //todo wall particle effect
-
-        //如果爬墙、滑墙、定格状态则跳过翻转
-        //if climbing, sliding, or "freezing", then skip the flipping
+        
+        //if climbing or sliding, skip the flipping
         if (isGrab||isSlide||!canMove)
         {
             return;
