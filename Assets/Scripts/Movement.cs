@@ -190,7 +190,6 @@ public class Movement : MonoBehaviour
     {
         //slideParticle.transform.parent.localScale = new Vector3(ParticleSide(), 1, 1);
         //ParticleSystem particle = ifWallJump ? wallJumpParticle : jumpParticle;
-
         _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
         _rigidbody2D.velocity += direction * jumpForce;
 
@@ -274,6 +273,7 @@ public class Movement : MonoBehaviour
         _hasDashed = false;
         isDash = false;
         _side = _animator.sprite.flipX ? -1 : 1;
+        _animator.SetTrigger("Land");
         //todo jumpParticle.Play();
     }
 
