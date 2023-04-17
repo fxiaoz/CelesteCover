@@ -16,9 +16,9 @@ public class AnimatorScript : MonoBehaviour
     private static readonly int IsSlide = Animator.StringToHash("IsSlide");
     private static readonly int IsDash = Animator.StringToHash("IsDash");
     private static readonly int CanMove = Animator.StringToHash("CanMove");
-    private static readonly int YVel = Animator.StringToHash("yVel");
-    private static readonly int Y = Animator.StringToHash("y");
-    private static readonly int X = Animator.StringToHash("x");
+    private static readonly int VerticalVelocity = Animator.StringToHash("VerticalVelocity");
+    private static readonly int VerticalAxis = Animator.StringToHash("VerticalAxis");
+    private static readonly int HorizontalAxis = Animator.StringToHash("HorizontalAxis");
 
     // Start is called before the first frame update
     void Start()
@@ -42,9 +42,9 @@ public class AnimatorScript : MonoBehaviour
 
     public void SetHorizontalMovement(float x,float y, float yVel)
     {
-        _animator.SetFloat(X,x);
-        _animator.SetFloat(Y,y);
-        _animator.SetFloat(YVel,yVel);
+        _animator.SetFloat(HorizontalAxis,x);
+        _animator.SetFloat(VerticalAxis,y);
+        _animator.SetFloat(VerticalVelocity,yVel);
     }
     
     public void Flip(int side)
@@ -55,7 +55,7 @@ public class AnimatorScript : MonoBehaviour
             if ((side == -1 && sprite.flipX)||(side == 1 && !sprite.flipX))
                 return;
         }
-        
+
         bool state = (side != 1);
         sprite.flipX = state;
     }
