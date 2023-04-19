@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Lava
+  - Fish
   layers:
   - Default
   - TransparentFX

@@ -8,7 +8,6 @@ using UnityEngine.Serialization;
 
 public class Movement : MonoBehaviour
 {
-    private BoxCollider2D _collision2D;
     private Rigidbody2D _rigidbody2D;
     private AnimatorScript _animator;
     private SoundManager _soundManager;
@@ -32,7 +31,6 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _collision2D = GetComponent<BoxCollider2D>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<AnimatorScript>();
         _soundManager = GetComponent<SoundManager>();
