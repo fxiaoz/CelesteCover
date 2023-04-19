@@ -83,6 +83,12 @@ public class Movement : MonoBehaviour
 
     private void StateMachine()
     {
+        if (CollisionCheck.IfDead()||Input.GetKeyDown(KeyCode.H))
+        {
+            StartCoroutine(ResetPosition(new Vector2(0,0)));
+            return;
+        }
+        
         if (CollisionCheck.onWall&&Input.GetButton("Grab")&&canMove)
         {
             if (_side!=CollisionCheck.wallSide)
@@ -299,14 +305,24 @@ public class Movement : MonoBehaviour
         _rigidbody2D.velocity = new Vector2(force, -slideSpeed);
     }
     
-    IEnumerator DisableMovement(float time)
+    private IEnumerator DisableMovement(float time)
     {
         canMove = false;
         yield return new WaitForSeconds(time);
         canMove = true;
     }
-    
-    void RigidbodyDrag(float x)
+
+    private IEnumerator ResetPosition(Vector2 position)
+    {
+        //todo play death animation
+        StartCoroutine(DisableMovement(5));
+        yield return new WaitForSeconds(1);
+        _rigidbody2D.position = position;
+        StopCoroutine(DisableMovement(0));
+        canMove = true;
+    }
+
+    private void RigidbodyDrag(float x)
     {
         _rigidbody2D.drag = x;
     }
