@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CollisionCheck : MonoBehaviour
 {
-    public LayerMask ground;
+    public LayerMask ground, lava;
 
-    public static bool onGround, onWall, onWallR, onWallL;
+    public static bool onGround, onWall, onWallR, onWallL, isDead;
     public static int wallSide;
 
     [SerializeField]public float collisionRadius = 1f;
@@ -28,6 +28,10 @@ public class CollisionCheck : MonoBehaviour
         
         onWallR = Physics2D.OverlapCircle((Vector2)position + rightOffset, collisionRadius, ground);
         onWallL = Physics2D.OverlapCircle((Vector2)position + leftOffset, collisionRadius, ground);
+
+        //isDead = Physics2D.OverlapCircle((Vector2)position + bottomOffset, collisionRadius, lava)
+        //         ||Physics2D.OverlapCircle((Vector2)position + rightOffset, collisionRadius, lava) 
+        //         || Physics2D.OverlapCircle((Vector2)position + leftOffset, collisionRadius, lava);
         
         //return side of wall(R:1, L:-1)
         wallSide = onWallR ? -1 : 1;
@@ -43,5 +47,10 @@ public class CollisionCheck : MonoBehaviour
         Gizmos.DrawWireSphere((Vector2)transform.position  + bottomOffset, collisionRadius);
         Gizmos.DrawWireSphere((Vector2)transform.position + rightOffset, collisionRadius);
         Gizmos.DrawWireSphere((Vector2)transform.position + leftOffset, collisionRadius);
+    }
+
+    public static bool IfDead()
+    {
+        return isDead;
     }
 }
