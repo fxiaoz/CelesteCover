@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8610e0f90058049bd846603cad15d53f
+guid: 39d5a1f13f71c114d8e26d6dcc9642eb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,7 +117,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Jump_PlayerAnimation-Sheet_0
+      name: DashBack_PlayerAnimation-Sheet_0
       rect:
         serializedVersion: 2
         x: 3
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ab878e84b88844d479d7278e34d7a98a
-      internalID: -1888409015
+      spriteID: a70962c8f78c1384a85da29c1a48e661
+      internalID: 739487142
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jump_PlayerAnimation-Sheet_1
+      name: DashBack_PlayerAnimation-Sheet_1
       rect:
         serializedVersion: 2
-        x: 33
-        y: 1
-        width: 28
-        height: 19
+        x: 38
+        y: 6
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,20 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 583a395177b434e1aa024d5ea003eb81
-      internalID: -845925362
+      spriteID: bac66d8b859cdd9468046529205b6c9b
+      internalID: 1516858667
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jump_PlayerAnimation-Sheet_2
+      name: DashBack_PlayerAnimation-Sheet_2
       rect:
         serializedVersion: 2
-        x: 65
-        y: 5
-        width: 30
-        height: 23
+        x: 70
+        y: 6
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,20 +173,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ef354a38114f042d788030892900d916
-      internalID: -198834034
+      spriteID: bfc82c529c0282c4aaef805210c82a1c
+      internalID: -1150508859
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jump_PlayerAnimation-Sheet_3
+      name: DashBack_PlayerAnimation-Sheet_3
       rect:
         serializedVersion: 2
-        x: 97
-        y: 8
-        width: 30
-        height: 23
+        x: 102
+        y: 6
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,59 +194,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3bd9e43dc1cd145998a1f7b204b91b2f
-      internalID: -49777906
+      spriteID: 26f7d93e6f664614396ec5ca57176020
+      internalID: 1159048758
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jump_PlayerAnimation-Sheet_4
+      name: DashBack_PlayerAnimation-Sheet_4
       rect:
         serializedVersion: 2
-        x: 129
-        y: 4
-        width: 30
-        height: 26
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3319bc1e3ed6f4bccbb2bfa6fd895937
-      internalID: -1091087833
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Jump_PlayerAnimation-Sheet_5
-      rect:
-        serializedVersion: 2
-        x: 161
-        y: 1
-        width: 28
-        height: 19
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e6583cb08c58f4da3b47e82a40b733f4
-      internalID: -804579467
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Jump_PlayerAnimation-Sheet_6
-      rect:
-        serializedVersion: 2
-        x: 195
+        x: 131
         y: 3
         width: 25
         height: 25
@@ -257,8 +215,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9880b0bd6565444e98eb889ccc51c4d3
-      internalID: 613169338
+      spriteID: a5db3eb5e1d667f4ba34d5c95da8b116
+      internalID: 57773598
       vertices: []
       indices: 
       edges: []
@@ -274,13 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Jump_PlayerAnimation-Sheet_0: -1888409015
-      Jump_PlayerAnimation-Sheet_1: -845925362
-      Jump_PlayerAnimation-Sheet_3: -49777906
-      Jump_PlayerAnimation-Sheet_5: -804579467
-      Jump_PlayerAnimation-Sheet_6: 613169338
-      Jump_PlayerAnimation-Sheet_2: -198834034
-      Jump_PlayerAnimation-Sheet_4: -1091087833
+      DashBack_PlayerAnimation-Sheet_4: 57773598
+      DashBack_PlayerAnimation-Sheet_0: 739487142
+      DashBack_PlayerAnimation-Sheet_3: 1159048758
+      DashBack_PlayerAnimation-Sheet_1: 1516858667
+      DashBack_PlayerAnimation-Sheet_2: -1150508859
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
