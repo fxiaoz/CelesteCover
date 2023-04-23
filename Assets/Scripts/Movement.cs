@@ -10,7 +10,7 @@ public class Movement : MonoBehaviour
 {
     private Rigidbody2D _rigidbody2D;
     private AnimatorScript _animator;
-    private SoundManager _soundManager;
+    //private SoundManager _soundManager;
 
     [SerializeField] public float moveSpeed = 10f;
     [SerializeField] public float jumpForce = 50f;
@@ -33,7 +33,7 @@ public class Movement : MonoBehaviour
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<AnimatorScript>();
-        _soundManager = GetComponent<SoundManager>();
+        //_soundManager = GetComponent<SoundManager>();
         canMove = true;
         isGrab = false;
         isDash = false;
@@ -196,7 +196,7 @@ public class Movement : MonoBehaviour
     {
         //slideParticle.transform.parent.localScale = new Vector3(ParticleSide(), 1, 1);
         //ParticleSystem particle = ifWallJump ? wallJumpParticle : jumpParticle;
-        _soundManager.Jump();
+        //_soundManager.Jump();
         _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
         _rigidbody2D.velocity += direction * jumpForce;
 
@@ -235,7 +235,7 @@ public class Movement : MonoBehaviour
         _hasDashed = true;
 
         _animator.SetTrigger("Dash");
-        _soundManager.Dash();
+        //_soundManager.Dash();
 
         _rigidbody2D.velocity = Vector2.zero;
         Vector2 direction = new Vector2(hor, ver);
