@@ -1,34 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class soundManager : MonoBehaviour
+public class SoundManager : MonoBehaviour
 {
-    public Movement myScriptReference;
-    public AudioClip Jump1;
-    public AudioClip dash1;
-    private AudioSource myAudioSource;
+    public AudioClip jump;
+    public AudioClip dash;
+    private AudioSource _myAudioSource;
 
     // Start is called before the first frame update
     void Start()
     {
-        // Get the AudioSource component
-        myAudioSource = GetComponent<AudioSource>();
+        _myAudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        myAudioSource.PlayOneShot(dash1);
-        // Play Jump1 sound when onGround is true
-        if ((myScriptReference.onGround == true) && (Input.GetKeyDown(KeyCode.Space)))
-        {
-            myAudioSource.PlayOneShot(Jump1);
-            Debug.Log("its happenenin babey!!");
-        }
-        if ((myScriptReference.isDash == true))
-        {
-            myAudioSource.PlayOneShot(dash1);
-        }
+    }
+
+    public void Jump()
+    {
+        _myAudioSource.PlayOneShot(jump);
+    }
+
+    public void Land()
+    {
+        
+    }
+
+    public void Dash()
+    {
+        _myAudioSource.PlayOneShot(dash);
+    }
+
+    public void Slide()
+    {
+        
+    }
+
+    public void Climb()
+    {
+        
+    }
+
+    public void Walk()
+    {
+        
+    }
+
+    public void Grab()
+    {
+        
+    }
+
+    public void Meow()
+    {
+        
     }
 }
