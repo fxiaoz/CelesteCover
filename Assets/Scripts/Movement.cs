@@ -10,6 +10,7 @@ public class Movement : MonoBehaviour
 {
     private Rigidbody2D _rigidbody2D;
     private AnimatorScript _animator;
+    private CameraShake _cameraShake;
     //private SoundManager _soundManager;
 
     [SerializeField] public float moveSpeed = 10f;
@@ -19,7 +20,9 @@ public class Movement : MonoBehaviour
     [SerializeField] public float slideSpeed = 5f;
 
     private float _x, _y, _xRaw, _yRaw;
-    
+
+    public float _dashTime = 0.1f;
+
     public bool canMove, isGrab, isSlide, isDash, onGround;
     private bool _hasDashed, _isWallJumped;
 
@@ -33,6 +36,7 @@ public class Movement : MonoBehaviour
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<AnimatorScript>();
+        _cameraShake = GetComponent<CameraShake>();
         //_soundManager = GetComponent<SoundManager>();
         canMove = true;
         isGrab = false;
@@ -158,6 +162,8 @@ public class Movement : MonoBehaviour
             {
                 Dash(_xRaw,_yRaw);
             }
+
+            _cameraShake.Shake(_dashTime);
         }
 
         if (CollisionCheck.onGround&&!onGround)
