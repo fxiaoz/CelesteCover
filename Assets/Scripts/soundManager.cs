@@ -5,8 +5,15 @@ using UnityEngine.Serialization;
 
 public class SoundManager : MonoBehaviour
 {
+    public bool meow = false;
+    public AudioClip[] sounds;
     public AudioClip jump;
     public AudioClip dash;
+    public AudioClip meow1;
+    public AudioClip meow2;
+    public AudioClip meow3;
+    public AudioClip meow4;
+    public AudioClip landing;
     private AudioSource _myAudioSource;
 
     // Start is called before the first frame update
@@ -27,7 +34,7 @@ public class SoundManager : MonoBehaviour
 
     public void Land()
     {
-        
+        _myAudioSource.PlayOneShot(landing);
     }
 
     public void Dash()
@@ -57,6 +64,13 @@ public class SoundManager : MonoBehaviour
 
     public void Meow()
     {
-        
+        if ((Input.GetMouseButtonDown(0)) && (meow == false)){
+            meow = true;
+
+        }
+        else if ((Input.GetMouseButtonUp(0)) && (meow == true))
+        {
+            meow = false;
+        }
     }
 }

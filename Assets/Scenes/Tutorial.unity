@@ -387,7 +387,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &397681890
 GameObject:
@@ -828,6 +828,7 @@ MonoBehaviour:
   dashSpeed: 50
   jumpLerp: 10
   slideSpeed: 5
+  _dashTime: 0.1
   canMove: 0
   isGrab: 0
   isSlide: 0
@@ -906,8 +907,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
---- !u!114 &642479719
-MonoBehaviour:
+--- !u!82 &642479725
+AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -918,8 +919,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90c96492dd0656240a61e629a05f590a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jump: {fileID: 8300000, guid: cfda27201d4fd62468b5776f85eba905, type: 3}
-  dash: {fileID: 8300000, guid: 645d36e8dd79e944f918efaf235ab0a0, type: 3}
+  myScriptReference: {fileID: 0}
+  Jump1: {fileID: 0}
+  dash1: {fileID: 0}
+--- !u!114 &642479720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642479694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80251723250092e4da795b3f0655113d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Transform: {fileID: 519420032}
+  Bound1: -5
+  Bound2: 5
 --- !u!1 &892079581
 GameObject:
   m_ObjectHideFlags: 0
