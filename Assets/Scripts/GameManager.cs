@@ -20,4 +20,9 @@ public class GameManager : MonoBehaviour
             //debug test
         }
     }
+
+    public void buttonClick()
+    {
+        SceneManager.LoadScene("Title");
+    }
 }
