@@ -21,8 +21,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+<<<<<<< HEAD
     public void buttonClick()
     {
         SceneManager.LoadScene("Title");
+=======
+    // loads the tutorial scene (connects to the Desend button on the start screen)
+    public void LoadGame()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
+
+    // exits the game (connects to the Exit button on the start sceen)
+    public void ExitGame()
+    {
+        Application.Quit();
+>>>>>>> Jeff2
     }
 }
