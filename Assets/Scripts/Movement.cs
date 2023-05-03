@@ -37,7 +37,7 @@ public class Movement : MonoBehaviour
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<AnimatorScript>();
         _cameraShake = GetComponent<CameraShake>();
-        //_soundManager = GetComponent<SoundManager>();
+        _soundManager = GetComponent<SoundManager>();
         canMove = true;
         isGrab = false;
         isDash = false;
@@ -162,8 +162,6 @@ public class Movement : MonoBehaviour
             {
                 Dash(_xRaw,_yRaw);
             }
-
-            _cameraShake.Shake(_dashTime);
         }
 
         if (CollisionCheck.onGround&&!onGround)
