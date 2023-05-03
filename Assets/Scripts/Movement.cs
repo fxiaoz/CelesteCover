@@ -177,7 +177,7 @@ public class Movement : MonoBehaviour
             onGround = false;
         }
         
-        //todo wall particle effect
+        WallParticle(_y);
         
         //if climbing or sliding, skip the flipping
         if (isGrab||isSlide||!canMove)
@@ -200,9 +200,9 @@ public class Movement : MonoBehaviour
 
     private void Jump(Vector2 direction,bool ifWallJump)
     {
-        //slideParticle.transform.parent.localScale = new Vector3(ParticleSide(), 1, 1);
-        //ParticleSystem particle = ifWallJump ? wallJumpParticle : jumpParticle;
-        //_soundManager.Jump();
+        slideParticle.transform.parent.localScale = new Vector3(ParticleSide(), 1, 1);
+        ParticleSystem particle = ifWallJump ? wallJumpParticle : jumpParticle;
+        _soundManager.Jump();
         _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
         _rigidbody2D.velocity += direction * jumpForce;
 
@@ -237,9 +237,7 @@ public class Movement : MonoBehaviour
     private void Dash(float hor, float ver)
     {
         //todo camera shaking
-        
         _hasDashed = true;
-
         _animator.SetTrigger("Dash");
         //_soundManager.Dash();
 
@@ -251,10 +249,11 @@ public class Movement : MonoBehaviour
 
     private IEnumerator DashRecover()
     {
+        FindObjectOfType<Trailer>().ShowGhost();
         StartCoroutine(GroundDash());
         DOVirtual.Float(14, 0, 0.8f, RigidbodyDrag);
 
-        //todo dashParticle.Play();
+        dashParticle.Play();
         _rigidbody2D.gravityScale = 0;
         GetComponent<FixedFalling>().enabled = false;
         _isWallJumped = true;
@@ -262,7 +261,7 @@ public class Movement : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        //todo dashParticle.Stop();
+        dashParticle.Stop();
         _rigidbody2D.gravityScale = 3;
         GetComponent<FixedFalling>().enabled = true;
         _isWallJumped = false;
@@ -288,7 +287,7 @@ public class Movement : MonoBehaviour
         isDash = false;
         _side = _animator.sprite.flipX ? -1 : 1;
         _animator.SetTrigger("Land");
-        //todo jumpParticle.Play();
+        jumpParticle.Play();
     }
 
     private void Sliding()
@@ -331,7 +330,20 @@ public class Movement : MonoBehaviour
         _rigidbody2D.drag = x;
     }
     
-    //todo wall particle method
+    private void WallParticle(float vertical)
+    {
+        var main = slideParticle.main;
+
+        if (isSlide || (isGrab && vertical < 0))
+        {
+            slideParticle.transform.parent.localScale = new Vector3(ParticleSide(), 1, 1);
+            main.startColor = Color.white;
+        }
+        else
+        {
+            main.startColor = Color.clear;
+        }
+    }
     
     private int ParticleSide()
     {
