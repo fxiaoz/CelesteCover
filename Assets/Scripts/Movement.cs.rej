@@ -1,0 +1,9 @@
+diff a/Assets/Scripts/Movement.cs b/Assets/Scripts/Movement.cs	(rejected hunks)
+@@ -324,7 +324,6 @@
+         _rigidbody2D.drag = x;
+     }
+     
+-    //todo wall particle method
+     private void WallParticle(float vertical)
+     {
+         var main = slideParticle.main;

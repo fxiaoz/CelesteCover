@@ -7,6 +7,9 @@ TagManager:
   - Ground
   - Lava
   - Fish
+  - tutorial end
+  - level 1 end
+  - level 2 end
   layers:
   - Default
   - TransparentFX
