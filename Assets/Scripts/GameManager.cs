@@ -14,11 +14,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.L))//later change to when the player reaches the goal point
-        {
-            SceneManager.LoadScene("Level 1");
-            //debug test
-        }
+        //if(Input.GetKeyDown(KeyCode.R))//later change to when the player reaches the goal point
+        //{
+        //    SceneManager.LoadScene("Level 1");
+        //    //debug test
+        //}
     }
 
     public void buttonClick()
