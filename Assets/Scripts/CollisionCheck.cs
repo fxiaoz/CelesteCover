@@ -30,8 +30,8 @@ public class CollisionCheck : MonoBehaviour
         onWallL = Physics2D.OverlapCircle((Vector2)position + leftOffset, collisionRadius, ground);
 
         //isDead = Physics2D.OverlapCircle((Vector2)position + bottomOffset, collisionRadius, lava)
-        //         ||Physics2D.OverlapCircle((Vector2)position + rightOffset, collisionRadius, lava) 
-        //         || Physics2D.OverlapCircle((Vector2)position + leftOffset, collisionRadius, lava);
+         //        ||Physics2D.OverlapCircle((Vector2)position + rightOffset, collisionRadius, lava) 
+         //        || Physics2D.OverlapCircle((Vector2)position + leftOffset, collisionRadius, lava);
         
         //return side of wall(R:1, L:-1)
         wallSide = onWallR ? -1 : 1;
