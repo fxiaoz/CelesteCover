@@ -200,7 +200,7 @@ public class Movement : MonoBehaviour
     {
         //slideParticle.transform.parent.localScale = new Vector3(ParticleSide(), 1, 1);
         //ParticleSystem particle = ifWallJump ? wallJumpParticle : jumpParticle;
-        _soundManager.Jump();
+        //_soundManager.Jump();
         _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
         _rigidbody2D.velocity += direction * jumpForce;
 
