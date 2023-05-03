@@ -10,7 +10,8 @@ public class Movement : MonoBehaviour
 {
     private Rigidbody2D _rigidbody2D;
     private AnimatorScript _animator;
-    private SoundManager _soundManager;
+    private CameraShake _cameraShake;
+    //private SoundManager _soundManager;
 
     [SerializeField] public float moveSpeed = 10f;
     [SerializeField] public float jumpForce = 50f;
@@ -19,7 +20,9 @@ public class Movement : MonoBehaviour
     [SerializeField] public float slideSpeed = 5f;
 
     private float _x, _y, _xRaw, _yRaw;
-    
+
+    public float _dashTime = 0.1f;
+
     public bool canMove, isGrab, isSlide, isDash, onGround;
     private bool _hasDashed, _isWallJumped;
 
@@ -33,7 +36,8 @@ public class Movement : MonoBehaviour
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<AnimatorScript>();
-        _soundManager = GetComponent<SoundManager>();
+        _cameraShake = GetComponent<CameraShake>();
+        //_soundManager = GetComponent<SoundManager>();
         canMove = true;
         isGrab = false;
         isDash = false;
@@ -158,6 +162,8 @@ public class Movement : MonoBehaviour
             {
                 Dash(_xRaw,_yRaw);
             }
+
+            _cameraShake.Shake(_dashTime);
         }
 
         if (CollisionCheck.onGround&&!onGround)
@@ -233,7 +239,7 @@ public class Movement : MonoBehaviour
         //todo camera shaking
         _hasDashed = true;
         _animator.SetTrigger("Dash");
-        _soundManager.Dash();
+        //_soundManager.Dash();
 
         _rigidbody2D.velocity = Vector2.zero;
         Vector2 direction = new Vector2(hor, ver);
