@@ -171,7 +171,7 @@ public class Movement : MonoBehaviour
             onGround = false;
         }
         
-        WallParticle(_y);
+        //WallParticle(_y);
         
         //if climbing or sliding, skip the flipping
         if (isGrab||isSlide||!canMove)
@@ -194,8 +194,8 @@ public class Movement : MonoBehaviour
 
     private void Jump(Vector2 direction,bool ifWallJump)
     {
-        slideParticle.transform.parent.localScale = new Vector3(ParticleSide(), 1, 1);
-        ParticleSystem particle = ifWallJump ? wallJumpParticle : jumpParticle;
+        //slideParticle.transform.parent.localScale = new Vector3(ParticleSide(), 1, 1);
+        //ParticleSystem particle = ifWallJump ? wallJumpParticle : jumpParticle;
         _soundManager.Jump();
         _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
         _rigidbody2D.velocity += direction * jumpForce;
@@ -247,7 +247,7 @@ public class Movement : MonoBehaviour
         StartCoroutine(GroundDash());
         DOVirtual.Float(14, 0, 0.8f, RigidbodyDrag);
 
-        dashParticle.Play();
+        //dashParticle.Play();
         _rigidbody2D.gravityScale = 0;
         GetComponent<FixedFalling>().enabled = false;
         _isWallJumped = true;
@@ -255,7 +255,7 @@ public class Movement : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        dashParticle.Stop();
+        //dashParticle.Stop();
         _rigidbody2D.gravityScale = 3;
         GetComponent<FixedFalling>().enabled = true;
         _isWallJumped = false;
@@ -281,7 +281,7 @@ public class Movement : MonoBehaviour
         isDash = false;
         _side = _animator.sprite.flipX ? -1 : 1;
         _animator.SetTrigger("Land");
-        jumpParticle.Play();
+        //jumpParticle.Play();
     }
 
     private void Sliding()
