@@ -11,7 +11,7 @@ public class Movement : MonoBehaviour
     private Rigidbody2D _rigidbody2D;
     private AnimatorScript _animator;
     private CameraShake _cameraShake;
-    //private SoundManager _soundManager;
+    private SoundManager _soundManager;
 
     [SerializeField] public float moveSpeed = 10f;
     [SerializeField] public float jumpForce = 50f;
