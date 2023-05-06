@@ -26,20 +26,28 @@ public class Trailer : MonoBehaviour
         
     }
 
-    public void ShowGhost()
+    public void ShowGhost(float time)
     {
+        gameObject.SetActive(true);
         Sequence s = DOTween.Sequence();
-
-        for (int i = 0; i < ghostsParent.childCount; i++)
+        s.AppendInterval(time);
+        s.AppendCallback(() =>
         {
-            Transform currentGhost = ghostsParent.GetChild(i);
-            s.AppendCallback(()=> currentGhost.position = _movement.transform.position);
-            s.AppendCallback(() => currentGhost.GetComponent<SpriteRenderer>().flipX = _animatorScript.sprite.flipX);
-            s.AppendCallback(()=>currentGhost.GetComponent<SpriteRenderer>().sprite = _animatorScript.sprite.sprite);
-            s.Append(currentGhost.GetComponent<SpriteRenderer>().material.DOColor(trailColor, 10));
-            s.AppendCallback(() => FadeSprite(currentGhost));
-            s.AppendInterval(ghostInterval);
-        }
+            gameObject.SetActive(false);
+        });
+
+        //Sequence s = DOTween.Sequence();
+
+        //for (int i = 0; i < ghostsParent.childCount; i++)
+        //{
+        //    Transform currentGhost = ghostsParent.GetChild(i);
+        //    s.AppendCallback(()=> currentGhost.position = _movement.transform.position);
+        //    s.AppendCallback(() => currentGhost.GetComponent<SpriteRenderer>().flipX = _animatorScript.sprite.flipX);
+        //    s.AppendCallback(()=>currentGhost.GetComponent<SpriteRenderer>().sprite = _animatorScript.sprite.sprite);
+        //    s.Append(currentGhost.GetComponent<SpriteRenderer>().material.DOColor(trailColor, 10));
+        //    s.AppendCallback(() => FadeSprite(currentGhost));
+        //    s.AppendInterval(ghostInterval);
+        //}
     }
 
     private void FadeSprite(Transform current)

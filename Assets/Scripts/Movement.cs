@@ -200,11 +200,18 @@ public class Movement : MonoBehaviour
     {
         //slideParticle.transform.parent.localScale = new Vector3(ParticleSide(), 1, 1);
         //ParticleSystem particle = ifWallJump ? wallJumpParticle : jumpParticle;
-        //_soundManager.Jump();
+        _soundManager.Jump();
         _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
         _rigidbody2D.velocity += direction * jumpForce;
 
         //particle.Play();
+
+        DustBehaviour dust = transform.GetComponentInChildren<DustBehaviour>(true);
+
+        if (dust != null)
+        {
+            dust.Play(0.5f);
+        }
     }
 
     private void WallJump()
@@ -247,7 +254,14 @@ public class Movement : MonoBehaviour
 
     private IEnumerator DashRecover()
     {
-        FindObjectOfType<Trailer>().ShowGhost();
+        //FindObjectOfType<Trailer>().ShowGhost();
+
+        Trailer trailer = transform.GetComponentInChildren<Trailer>(true);
+        if(trailer != null)
+        {
+            trailer.ShowGhost(0.5f);
+        }
+
         StartCoroutine(GroundDash());
         DOVirtual.Float(14, 0, 0.8f, RigidbodyDrag);
 
