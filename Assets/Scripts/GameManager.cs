@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     // loads the tutorial scene (connects to the Desend button on the start screen)
     public void LoadGame()
     {
-        SceneManager.LoadScene("Tutorial");
+        SceneManager.LoadScene("TutorialForReal");
     }
 
     // exits the game (connects to the Exit button on the start sceen)

@@ -205,6 +205,13 @@ public class Movement : MonoBehaviour
         _rigidbody2D.velocity += direction * jumpForce;
 
         //particle.Play();
+
+        DustBehaviour dust = transform.GetComponentInChildren<DustBehaviour>(true);
+
+        if (dust != null)
+        {
+            dust.Play(0.5f);
+        }
     }
 
     private void WallJump()
@@ -247,7 +254,14 @@ public class Movement : MonoBehaviour
 
     private IEnumerator DashRecover()
     {
-        FindObjectOfType<Trailer>().ShowGhost();
+        //FindObjectOfType<Trailer>().ShowGhost();
+
+        Trailer trailer = transform.GetComponentInChildren<Trailer>(true);
+        if(trailer != null)
+        {
+            trailer.ShowGhost(0.5f);
+        }
+
         StartCoroutine(GroundDash());
         DOVirtual.Float(14, 0, 0.8f, RigidbodyDrag);
 
