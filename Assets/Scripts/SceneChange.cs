@@ -33,5 +33,10 @@ public class SceneChange : MonoBehaviour
         {
             SceneManager.LoadScene("Win");
         }
+
+        if (collision.gameObject.tag == "Finish")
+        {
+            SceneManager.LoadScene("Win");
+        }
     }
 }
