@@ -42,9 +42,9 @@ public class CollisionCheck : MonoBehaviour
         //return side of wall(R:1, L:-1)
         wallSide = onWallR ? -1 : 1;
 
-        if(!lastOnGround && onGround)
+        if(!lastOnGround && onGround && !onWall)
         {
-            DustBehaviour dust = transform.GetComponentInChildren<DustBehaviour>(true);
+            DustBehaviour dust = transform.Find("DustFall").GetComponent<DustBehaviour>();
 
             if(dust != null)
             {
