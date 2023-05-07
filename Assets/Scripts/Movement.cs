@@ -206,7 +206,7 @@ public class Movement : MonoBehaviour
 
         //particle.Play();
 
-        DustBehaviour dust = transform.GetComponentInChildren<DustBehaviour>(true);
+        DustBehaviour dust = transform.Find("DustRise").GetComponent<DustBehaviour>();
 
         if (dust != null)
         {
@@ -254,6 +254,11 @@ public class Movement : MonoBehaviour
 
     private IEnumerator DashRecover()
     {
+        if(_cameraShake != null)
+        {
+            _cameraShake.Shake(0.1f);
+        }
+
         //FindObjectOfType<Trailer>().ShowGhost();
 
         Trailer trailer = transform.GetComponentInChildren<Trailer>(true);
