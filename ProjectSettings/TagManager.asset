@@ -10,6 +10,7 @@ TagManager:
   - tutorial end
   - level 1 end
   - level 2 end
+  - level 3 end
   layers:
   - Default
   - TransparentFX
