@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 74e0f1831ebe5450a85380eb194f4812
+guid: a0d0c8379ba3d44beb8880752173edd0
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 30
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -117,133 +117,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tile_map3_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 755617b0b24f6447e8602d0479482db2
-      internalID: -39968159
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tile_map3_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5ab0b68f1953248bdb30d0df3a1b0568
-      internalID: -831633782
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tile_map3_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0d7dc399da115453784b39e0cbf94dcd
-      internalID: -1851364550
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tile_map3_3
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b5cc1bc5a31604262b151d12271715be
-      internalID: 2031257157
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tile_map3_4
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: de6f2e3d6efb74be3b0e6dddb84a1cab
-      internalID: 2108242395
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tile_map3_5
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b581f70f20b7b4a7da897a9d2cb40192
-      internalID: 531959686
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tile_map3_6
+      name: Death_PlayerAnimation-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -257,14 +131,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eeea29e2d8c14424a8a02df4c415833f
-      internalID: -339584483
+      spriteID: d7deef9c19dd94d2e8e10d87831013a6
+      internalID: 2040852438
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tile_map3_7
+      name: Death_PlayerAnimation-Sheet_1
       rect:
         serializedVersion: 2
         x: 32
@@ -278,14 +152,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eb36d96e3919c4a0ca8b06302de4a822
-      internalID: 1501556651
+      spriteID: 25f036451343b4dcdb8f987b0cee88a2
+      internalID: 2491450
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tile_map3_8
+      name: Death_PlayerAnimation-Sheet_2
       rect:
         serializedVersion: 2
         x: 64
@@ -299,8 +173,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ac9f937f6f6449aabe89fc3bc1c50b9
-      internalID: -539520314
+      spriteID: 8ffd068a7c20c4d11bf4181de3d13a12
+      internalID: 1896696900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Death_PlayerAnimation-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b32aa036bcf543e49c8ee900b5ffb6e
+      internalID: -992511352
       vertices: []
       indices: 
       edges: []
@@ -316,15 +211,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      tile_map3_6: -339584483
-      tile_map3_0: -39968159
-      tile_map3_2: -1851364550
-      tile_map3_5: 531959686
-      tile_map3_1: -831633782
-      tile_map3_4: 2108242395
-      tile_map3_3: 2031257157
-      tile_map3_8: -539520314
-      tile_map3_7: 1501556651
+      Death_PlayerAnimation-Sheet_1: 2491450
+      Death_PlayerAnimation-Sheet_2: 1896696900
+      Death_PlayerAnimation-Sheet_0: 2040852438
+      Death_PlayerAnimation-Sheet_3: -992511352
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
