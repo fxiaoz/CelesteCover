@@ -6,6 +6,10 @@ public class CollisionCheck : MonoBehaviour
 {
     public GameObject revivePosition;
 
+    public GameObject deadBody;
+
+    GameObject myDeadBody;
+
     public LayerMask ground, lava;
 
     public static bool onGround, onWall, onWallR, onWallL, isDead;
@@ -15,11 +19,21 @@ public class CollisionCheck : MonoBehaviour
     public Vector2 bottomOffset, rightOffset, leftOffset;
 
     private bool lastOnGround;
+
+    Animator MyAnim;
+    Rigidbody2D MyRigd;
+
+    public float reviveTime = 0.5f;
+    float currentTime;
+    public bool Dead = false;
+    public bool Revive = false;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        MyAnim = GetComponent<Animator>();
+        MyRigd = GetComponent<Rigidbody2D>();
+        currentTime = reviveTime;
     }
 
     // Update is called once per frame
@@ -51,6 +65,48 @@ public class CollisionCheck : MonoBehaviour
                 dust.Play(0.5f);
             }
         }
+
+        if (Dead)
+        {
+            Vector3 deadSpot = new Vector3(0, -500, 0);
+
+            myDeadBody = Instantiate(deadBody, transform.position, Quaternion.identity);
+
+            transform.position = deadSpot;
+
+            Revive = true;
+
+            Dead = false;
+
+            //MyAnim.SetBool("IsDead", true);
+
+            //MyRigd.bodyType = RigidbodyType2D.Kinematic;
+
+            //Vector3 posUp = new Vector3(0, 1, 0);
+
+            //transform.position -= posUp*3*Time.deltaTime;
+        }
+
+        if (Revive)
+        {
+            currentTime--;
+
+            if (currentTime == 0)
+            {
+                //    currentTime = reviveTime;
+                //    transform.position = revivePosition.transform.position;
+                //    MyRigd.bodyType = RigidbodyType2D.Dynamic;
+                //    MyAnim.SetBool("IsDead", false);
+
+                Destroy(myDeadBody);
+
+                transform.position = revivePosition.transform.position;
+
+                currentTime = reviveTime;
+
+                Revive = false;
+            }
+        }
     }
     
     //visible collider
@@ -77,7 +133,8 @@ public class CollisionCheck : MonoBehaviour
 
         if(layer == target.layer)
         {
-            transform.position = revivePosition.transform.position;
+            Dead = true;
+            currentTime = reviveTime;
         }
     }
 }

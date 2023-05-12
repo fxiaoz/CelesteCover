@@ -10084,6 +10084,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   revivePosition: {fileID: 0}
+  deadBody: {fileID: 659756839471265238, guid: a903c4dc6a08d4410ab8d81ef77d972f, type: 3}
   ground:
     serializedVersion: 2
     m_Bits: 64
@@ -10094,6 +10095,9 @@ MonoBehaviour:
   bottomOffset: {x: 0, y: -0.3}
   rightOffset: {x: -0.3, y: 0}
   leftOffset: {x: 0.3, y: 0}
+  reviveTime: 100
+  Dead: 0
+  Revive: 0
 --- !u!114 &1121516736994185717
 MonoBehaviour:
   m_ObjectHideFlags: 0
