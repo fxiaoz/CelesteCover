@@ -38,5 +38,10 @@ public class SceneChange : MonoBehaviour
         {
             SceneManager.LoadScene("Win");
         }
+
+        if (collision.gameObject.tag == "level 3 end")
+        {
+            SceneManager.LoadScene("level 2");
+        }
     }
 }
