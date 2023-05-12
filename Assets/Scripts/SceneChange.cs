@@ -26,7 +26,7 @@ public class SceneChange : MonoBehaviour
 
         if(collision.gameObject.tag == "level 1 end")
         {
-            SceneManager.LoadScene("Level 2");
+            SceneManager.LoadScene("Level 3");
         }
 
         if(collision.gameObject.tag == "level 2 end")
