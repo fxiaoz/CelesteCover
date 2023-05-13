@@ -89,9 +89,9 @@ public class CollisionCheck : MonoBehaviour
 
         if (Revive)
         {
-            currentTime--;
+            currentTime -= Time.deltaTime;
 
-            if (currentTime == 0)
+            if (currentTime <= 0)
             {
                 //    currentTime = reviveTime;
                 //    transform.position = revivePosition.transform.position;

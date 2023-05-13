@@ -4899,7 +4899,7 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -3
   m_Time: 0.2
   m_Parameters:
     serializedVersion: 3
@@ -4921,9 +4921,9 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.8773585, g: 0.6497419, b: 0.79821795, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 0.5566038, g: 0.32818618, b: 0.5347552, a: 1}
+      key1: {r: 0.8784314, g: 0.6509804, b: 0.8, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 1}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -4939,7 +4939,7 @@ TrailRenderer:
       ctime7: 0
       atime0: 0
       atime1: 65535
-      atime2: 0
+      atime2: 65535
       atime3: 0
       atime4: 0
       atime5: 0
@@ -9803,7 +9803,7 @@ GameObject:
   - component: {fileID: 1121516736994185678}
   - component: {fileID: 1121516736994185679}
   - component: {fileID: 1431023206}
-  - component: {fileID: 1620308597}
+  - component: {fileID: 6998357312575699091}
   m_Layer: 0
   m_Name: obj_player
   m_TagString: Untagged
@@ -10095,7 +10095,7 @@ MonoBehaviour:
   bottomOffset: {x: 0, y: -0.3}
   rightOffset: {x: -0.3, y: 0}
   leftOffset: {x: 0.3, y: 0}
-  reviveTime: 100
+  reviveTime: 1
   Dead: 0
   Revive: 0
 --- !u!114 &1121516736994185717
@@ -10158,7 +10158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7a9e74ce6fae4bd295f44b9dde3b27b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1620308597
+--- !u!114 &6998357312575699091
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
